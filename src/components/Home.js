@@ -1,11 +1,12 @@
 import React from 'react'
-import Button from '@mui/material/Button'
+import { Button, CircularProgress } from '@mui/material'
 
 export default function Home({
     handleClick,
     handleInputChange,
     inputVal,
     buttonDisabled,
+    loading,
 }) {
     return (
         <form className='homepage'>
@@ -24,8 +25,7 @@ export default function Home({
                 disabled={buttonDisabled}
                 variant='contained'
                 onClick={handleClick}>
-                {/* <Link to='/MainForm'>Next</Link> */}
-                Next
+                {loading ? <CircularProgress color='inherit' /> : 'Next'}
             </Button>
         </form>
     )
