@@ -5,7 +5,7 @@ export const FormSelection = () => {
     const { 'First Name': user } = JSON.parse(localStorage.getItem('userdata'))
     return (
         <div className='formPage'>
-            <h2> Hello, {user}. Which Request to you want to make today?</h2>
+            <h2> Hello, {user}. Which Request do you want to make today?</h2>
             <div className='cardBox'>
                 <Link to='/perdiem' className='formCard perdiem'>
                     Per Diem
