@@ -18,6 +18,7 @@ export default function Home({
                     value={inputVal}
                     onChange={handleInputChange}
                     placeholder='firstname.lastname@easysolar.org'
+                    autoFocus
                 />
             </div>
             <Button

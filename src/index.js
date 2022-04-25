@@ -3,7 +3,10 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './index.css'
 import App from './App'
-import { FormSelection } from './components/FormSelection'
+import { FormSelection } from './pages/FormSelection'
+import PerDiem from './pages/perdiem'
+import PettyCash from './pages/pettycash'
+import Vehicle from './pages/vehicle'
 import reportWebVitals from './reportWebVitals'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -13,6 +16,9 @@ root.render(
             <Routes>
                 <Route path='/' element={<App />} />
                 <Route path='/formselection' element={<FormSelection />} />
+                <Route path='/perdiem' element={<PerDiem />} />
+                <Route path='/pettycash' element={<PettyCash />} />
+                <Route path='/vehicle' element={<Vehicle />} />
             </Routes>
         </BrowserRouter>
     </React.StrictMode>

@@ -1,0 +1,34 @@
+.mainForm {
+    display: flex;
+    flex-direction: column;
+    width: 720px;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 5vh;
+    background-color: transparent;
+}
+
+.greeting {
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.inputdiv {
+    margin: 25px 0;
+    width: 300px;
+}
+
+input[type='text'],
+input[type='number'] {
+    width: 250px;
+}
+
+.inputdiv.radioset {
+    display: flex;
+    align-items: center;
+}
+
+.submitButton {
+    /* text-align: justify; */
+    width: 300px;
+}

@@ -30,7 +30,7 @@ function App() {
             .get(API_URI)
             .then((res) => res.data)
             .then((data) => {
-                localStorage.setItem('userdata', JSON.stringify(data))
+                window.localStorage.setItem('userdata', JSON.stringify(data))
                 navigate('/formselection')
             })
     }

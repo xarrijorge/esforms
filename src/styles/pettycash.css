@@ -1,0 +1,59 @@
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.requestSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.elDiv {
+    border-bottom: 1px solid lightgrey;
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+.addButton {
+    font-size: 2em;
+    cursor: pointer;
+    color: #1565C0;
+    margin: 20px;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    margin-left: 80%;
+}
+
+.addButton:disabled {
+    color: gray;
+    cursor: not-allowed;
+}
+
+input[type='number'] {
+    min-width: 50px;
+    max-width: 100px;
+    /* min-width: max-content; */
+}
+
+.textInput {
+    margin: 10px !important;
+}
+
+.submitButton {
+    width: 150px;
+    height: 40px;
+    margin: 40px 0;
+    background-color: #1565C0;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    font-size: larger;
+    color: white;
+}
+
+/* ////// Home Page styles ///////// */
