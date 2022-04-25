@@ -12,6 +12,7 @@ export default function BasicDatePicker({
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
+                disablePast
                 label={label}
                 value={dateValue}
                 name='date'
