@@ -4,7 +4,7 @@ import Item from '../components/Item'
 import '../styles/pettycash.css'
 
 import { BsFillPlusCircleFill } from 'react-icons/bs'
-import { TextField } from '@mui/material'
+import { TextField, Button } from '@mui/material'
 
 function PettyCash() {
     const [list, setList] = React.useState([<Item count={0} />])
@@ -47,7 +47,7 @@ function PettyCash() {
     }, [itemsData, bankDetails])
 
     return (
-        <div className='App'>
+        <div className='pettycashForm'>
             <form onSubmit={handleSubmit}>
                 <h2>
                     Welcome, {data['First Name']}. Please fill out the form
@@ -115,9 +115,14 @@ function PettyCash() {
                         <BsFillPlusCircleFill />
                     </button>
                 </section>
-                <button className='submitButton' type='submit'>
-                    submit
-                </button>
+                <Button
+                    color='primary'
+                    variant='outlined'
+                    type='submit'
+                    size='large'
+                    className='submitButton'>
+                    Submit
+                </Button>
             </form>
         </div>
     )

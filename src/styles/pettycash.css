@@ -28,7 +28,7 @@
     cursor: not-allowed;
 }
 
-.pettycash input[type='number'] {
+.pettycashForm input[type='number'] {
     min-width: 50px;
     max-width: 100px;
     /* min-width: max-content; */
@@ -38,16 +38,12 @@
     margin: 10px !important;
 }
 
-.submitButton {
-    width: 150px;
-    height: 40px;
-    margin: 40px 0;
-    background-color: #1565C0;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    font-size: larger;
-    color: white;
+.pettycashForm .submitButton {
+    /* text-align: justify; */
+    width: 300px;
 }
-
+.pettycashForm .submitButton:hover{
+    background-color: #1565C0;
+    color: #fff;
+}
 /* ////// Home Page styles ///////// */

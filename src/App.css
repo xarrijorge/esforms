@@ -74,6 +74,11 @@ color: #141414;
     text-decoration: none;
     font-size: 1.5rem;
     line-height: 200px;
+    transition: all 0.2s ease-in-out;
+}
+
+.formCard:hover{
+    box-shadow:5px 3px 8px 3px lightgrey;
 }
 .pettycash{
     background-color: #3325ee;
@@ -88,3 +93,4 @@ color: #141414;
     margin-top: 15vh;
     margin-bottom: 20px;
 }
+
