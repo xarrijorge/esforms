@@ -1,9 +1,3 @@
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .requestSection {
     display: flex;
     flex-direction: column;
@@ -34,7 +28,7 @@ form {
     cursor: not-allowed;
 }
 
-input[type='number'] {
+.pettycash input[type='number'] {
     min-width: 50px;
     max-width: 100px;
     /* min-width: max-content; */

@@ -65,7 +65,7 @@ const PerDiem = () => {
     }
 
     return (
-        <div className='perDiemForm'>
+        <div className='perdiemform'>
             <h2 className='greeting'>
                 Welcome, {data['First Name']}. Please Fill out the details below
             </h2>

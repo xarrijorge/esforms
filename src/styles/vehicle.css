@@ -1,0 +1,18 @@
+.vehicleForm{
+    padding: 30px 0;
+    height: auto;
+}
+.vehicleForm .mainForm {
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: center;
+}
+
+.vehicleForm .submitButton {
+    /* text-align: justify; */
+    width: 300px;
+}
+.vehicleForm .submitButton:hover{
+    background-color: #1565C0;
+    color: #fff;
+}

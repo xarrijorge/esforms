@@ -7,6 +7,7 @@ export default function Home({
     inputVal,
     buttonDisabled,
     loading,
+    buttonRef,
 }) {
     return (
         <form className='homepage'>

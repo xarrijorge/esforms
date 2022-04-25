@@ -24,7 +24,7 @@ function App() {
         return response
     })
     let navigate = useNavigate()
-    const GetData = async () => {
+    const GetData = React.useCallback(async () => {
         console.log(API_URI)
         await axios
             .get(API_URI)
@@ -33,7 +33,8 @@ function App() {
                 window.localStorage.setItem('userdata', JSON.stringify(data))
                 navigate('/formselection')
             })
-    }
+    }, [API_URI, navigate])
+
     const handleInputChange = (event) => {
         event.preventDefault()
         setInputVal(event.target.value)
@@ -43,12 +44,15 @@ function App() {
             setButtonDisabled(true)
         }
     }
-
-    React.useEffect(() => {
-        inputVal.match(/[a-z.]+@[slib.]{0,4}?[easysolar]+\.[org]{3}/g)
-            ? setButtonDisabled(false)
-            : setButtonDisabled(true)
-    }, [inputVal])
+    React.useEffect(
+        (e) => {
+            inputVal.match(/[a-z.]+@[slib.]{0,4}?[easysolar]+\.[org]{3}/g)
+                ? setButtonDisabled(false)
+                : setButtonDisabled(true)
+            //it triggers by pressing the enter key
+        },
+        [inputVal, GetData]
+    )
 
     return (
         <div className='App'>
