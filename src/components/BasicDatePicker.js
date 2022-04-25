@@ -4,11 +4,15 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import DatePicker from '@mui/lab/DatePicker'
 
-export default function BasicDatePicker({ dateValue, setDateValue }) {
+export default function BasicDatePicker({
+    dateValue,
+    setDateValue,
+    label = 'Date of leaving Station?',
+}) {
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
-                label='Date of Leavning Station'
+                label={label}
                 value={dateValue}
                 name='date'
                 onChange={(newValue) => {

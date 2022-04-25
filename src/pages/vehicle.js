@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import axios from 'axios'
 import '../styles/perdiem.css'
 import {
@@ -49,12 +49,19 @@ const Vehicle = () => {
     }
 
     return (
-        <Fragment>
+        <div className='vehicleForm'>
             <h2 className='greeting'>
                 Welcome, {data['First Name']}. Please Fill out the details below
             </h2>
             <form className='mainForm' onSubmit={handleSubmit}>
                 <div>
+                    <div className='inputdiv'>
+                        <BasicDatePicker
+                            dateValue={dateValue}
+                            setDateValue={setDateValue}
+                            label='Date Vehicle is needed?'
+                        />
+                    </div>
                     <InputLabel id='demo-simple-select-label'>
                         What Type of Vehicle do you need?
                     </InputLabel>
@@ -158,7 +165,7 @@ const Vehicle = () => {
                     Submit
                 </Button>
             </form>
-        </Fragment>
+        </div>
     )
 }
 
