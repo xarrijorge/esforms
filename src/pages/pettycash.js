@@ -25,7 +25,7 @@ function PettyCash() {
         })
     }
 
-    const SUBMIT_URI = 'https://esformsbackend.herokuapp.com/pettycash'
+    const SUBMIT_URI = 'https://esformsbackend.herokuapp.com/requests/pettycash'
     // const LOCAL_URI = 'http://localhost:3001/pettycash'
     const headers = { 'content-type': 'application/json' }
 
@@ -43,7 +43,7 @@ function PettyCash() {
     }
     React.useEffect(() => {
         delete itemsData['']
-        setSubmitData({ ...bankDetails, ...itemsData })
+        setSubmitData({ ...bankDetails, items: { ...itemsData } })
     }, [itemsData, bankDetails])
 
     return (

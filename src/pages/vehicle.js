@@ -28,7 +28,7 @@ const Vehicle = () => {
         })
         console.log(formData)
     }
-    const API_URI = 'https://esformsbackend.herokuapp.com/requests'
+    const API_URI = 'https://esformsbackend.herokuapp.com/requests/vehicle'
     // const API_URI = 'http://localhost:3001/requests'
     const headers = { 'content-type': 'application/json' }
 
