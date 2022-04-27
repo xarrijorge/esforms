@@ -10,7 +10,10 @@ const Item = ({ count, data, setData }) => {
 
     React.useEffect(() => {
         setTotal(amount * unitCost)
-        setData({ ...data, [itemName]: { ...elData, total: total } })
+        setData({
+            ...data,
+            [itemName]: { ...elData, total: total },
+        })
     }, [amount, itemName, data, elData, unitCost, total, setTotal, setData])
 
     return (
@@ -22,6 +25,7 @@ const Item = ({ count, data, setData }) => {
                 size='small'
                 id='outlined-required'
                 label='Item Name'
+                value={itemName}
                 name={`item${count}`}
                 onChange={(e) => setItemName(e.target.value)}
             />
