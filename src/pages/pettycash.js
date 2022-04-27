@@ -25,8 +25,8 @@ function PettyCash() {
         })
     }
 
-    const SUBMIT_URI = 'https://esformsbackend.herokuapp.com/requests/pettycash'
-    // const LOCAL_URI = 'http://localhost:3001/pettycash'
+    // const SUBMIT_URI = 'https://esformsbackend.herokuapp.com/requests/pettycash'
+    const SUBMIT_URI = 'http://localhost:3001/pettycash'
     const headers = { 'content-type': 'application/json' }
 
     const handleSubmit = async (e) => {
@@ -43,6 +43,10 @@ function PettyCash() {
     }
     React.useEffect(() => {
         delete itemsData['']
+        Object.keys(itemsData)
+            .filter((key) => !itemsData[key].cost || !itemsData[key].amount)
+            .forEach((key) => delete itemsData[key])
+
         setSubmitData({ ...bankDetails, items: { ...itemsData } })
     }, [itemsData, bankDetails])
 
