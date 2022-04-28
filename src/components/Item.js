@@ -8,11 +8,17 @@ const Item = ({ count, data, setData }) => {
     const [total, setTotal] = React.useState(0)
     const [elData, setElData] = React.useState({})
 
+    const handleNameChange = (e) => {
+        setAmount(null)
+        setCost(null)
+        setItemName(e.target.value)
+    }
+
     React.useEffect(() => {
         setTotal(amount * unitCost)
         setData({
             ...data,
-            [itemName]: { ...elData, total: total },
+            [itemName]: { cost: unitCost, amount: amount, total: total },
         })
     }, [amount, itemName, data, elData, unitCost, total, setTotal, setData])
 
@@ -27,7 +33,7 @@ const Item = ({ count, data, setData }) => {
                 label='Item Name'
                 value={itemName}
                 name={`item${count}`}
-                onChange={(e) => setItemName(e.target.value)}
+                onChange={handleNameChange}
             />
             <TextField
                 className='textInput'
@@ -35,6 +41,7 @@ const Item = ({ count, data, setData }) => {
                 type='number'
                 size='small'
                 label='Unit Cost'
+                value={unitCost}
                 onChange={(e) => {
                     setCost(e.target.value)
                     setElData({ ...elData, cost: e.target.value })
@@ -46,6 +53,7 @@ const Item = ({ count, data, setData }) => {
                 className='textInput'
                 size='small'
                 label='Amount'
+                value={amount}
                 onChange={(e) => {
                     setAmount(e.target.value)
                     setElData({
