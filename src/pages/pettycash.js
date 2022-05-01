@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import Item from '../components/Item'
+import { useNavigate } from 'react-router-dom'
 import '../styles/pettycash.css'
 
 import { BsFillPlusCircleFill } from 'react-icons/bs'
@@ -29,12 +30,14 @@ function PettyCash() {
     // const SUBMIT_URI = 'http://localhost:3001/pettycash'
     const headers = { 'content-type': 'application/json' }
 
+    let navigate = useNavigate()
     const handleSubmit = async (e) => {
         e.preventDefault()
         await axios
             .post(SUBMIT_URI, { ...submitData, user: data }, headers)
             .then((response) => {
                 console.log(response)
+                navigate('/formselection')
             })
             .catch((err) => {
                 console.log(err)

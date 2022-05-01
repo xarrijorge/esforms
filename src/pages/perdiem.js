@@ -29,8 +29,9 @@ const PerDiem = () => {
         const mealVal = parseInt(data.Meals.replace(/[^a-z0-9]/gi, '')) * days
         const accVal =
             parseInt(data.Accommodation.replace(/[^a-z0-9]/gi, '')) * nights
+        const fareVal = parseInt(formData.fare) || 0
 
-        const TOTALCLAIM = mealVal + accVal
+        const TOTALCLAIM = mealVal + accVal + fareVal
 
         setClaim(TOTALCLAIM)
         setFormData({ ...formData, TOTALCLAIM: TOTALCLAIM })
@@ -40,19 +41,20 @@ const PerDiem = () => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value.trim(),
+            date: dateValue.toDateString(),
         })
         console.log(formData)
     }
-    const API_URI = 'https://esformsbackend.herokuapp.com/requests/perdiem'
-    // const API_URI = 'http://localhost:3001/requests'
+    // const API_URI = 'https://esformsbackend.herokuapp.com/requests/perdiem'
+    const API_URI = 'http://localhost:3001/requests'
     const headers = { 'content-type': 'application/json' }
 
     // console.log(formik.values)
     const handleSubmit = async (e) => {
+        e.preventDefault()
         setFormData({
             ...formData,
             [e.target.name]: e.target.value,
-            totalclaim: claim,
         })
         await axios
             .post(API_URI, formData, headers)
@@ -217,10 +219,26 @@ const PerDiem = () => {
                                 <MenuItem value='Motorbike' name='vehicle'>
                                     Motorbike
                                 </MenuItem>
+                                <MenuItem value='local' name='vehicle'>
+                                    Local Transportation
+                                </MenuItem>
+
                                 <MenuItem value='any' name='vehicle'>
                                     Any Available Option
                                 </MenuItem>
                             </Select>
+                            {formData.vehicle === 'local' && (
+                                <div className='inputdiv'>
+                                    <TextField
+                                        label='Transportation Fare'
+                                        defaultValue={0}
+                                        name='fare'
+                                        type='number'
+                                        variant='outlined'
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                            )}
                         </div>
                         <FormLabel id='purpose-group-label'>
                             What is the Purpose of your trip?

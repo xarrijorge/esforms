@@ -11,7 +11,7 @@ export default function Home({
 }) {
     return (
         <form className='homepage'>
-            <h2> Please Enter Your Email Address</h2>
+            <h2 className='homegreeting'> Please Enter Your Email Address</h2>
             <div>
                 <input
                     className='homeinput'
