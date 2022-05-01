@@ -1,3 +1,8 @@
+.banksection{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
 .requestSection {
     display: flex;
     flex-direction: column;
@@ -7,9 +12,11 @@
 
 .elDiv {
     border-bottom: 1px solid lightgrey;
-    height: 80px;
+    height: auto;
     display: flex;
     align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .addButton {

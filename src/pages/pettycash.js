@@ -25,8 +25,8 @@ function PettyCash() {
         })
     }
 
-    // const SUBMIT_URI = 'https://esformsbackend.herokuapp.com/requests/pettycash'
-    const SUBMIT_URI = 'http://localhost:3001/pettycash'
+    const SUBMIT_URI = 'https://esformsbackend.herokuapp.com/requests/pettycash'
+    // const SUBMIT_URI = 'http://localhost:3001/pettycash'
     const headers = { 'content-type': 'application/json' }
 
     const handleSubmit = async (e) => {
@@ -58,7 +58,7 @@ function PettyCash() {
                     below.
                 </h2>
                 <h3>Bank Details Section</h3>
-                <section>
+                <section className='banksection'>
                     <span>
                         <TextField
                             required
@@ -111,7 +111,6 @@ function PettyCash() {
                             onChange={handleBankChange}
                         />
                     </span>
-
                     <span>
                         <TextField
                             type='text'

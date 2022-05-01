@@ -9,9 +9,6 @@ const Item = ({ count, data, setData }) => {
     const [description, setInfo] = React.useState('')
 
     const handleNameChange = (e) => {
-        // setAmount(0)
-        // setCost(0)
-        // setInfo('')
         setItemName(e.target.value)
     }
 
