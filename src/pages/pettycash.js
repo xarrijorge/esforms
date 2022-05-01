@@ -95,6 +95,27 @@ function PettyCash() {
                         <TextField
                             type='text'
                             size='small'
+                            label='Mobile Money Number'
+                            name='momonumber'
+                            className='textInput'
+                            onChange={handleBankChange}
+                        />
+                    </span>
+                    <span>
+                        <TextField
+                            type='text'
+                            size='small'
+                            label='B-Band Number'
+                            name='bbandnumber'
+                            className='textInput'
+                            onChange={handleBankChange}
+                        />
+                    </span>
+
+                    <span>
+                        <TextField
+                            type='text'
+                            size='small'
                             label='Budget Code'
                             name='budgetcode'
                             className='textInput'
