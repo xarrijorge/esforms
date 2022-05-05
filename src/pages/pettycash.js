@@ -26,8 +26,8 @@ function PettyCash() {
         })
     }
 
-    // const SUBMIT_URI = 'https://esformsbackend.herokuapp.com/requests/pettycash'
-    const SUBMIT_URI = 'http://localhost:3001/pettycash'
+    const SUBMIT_URI = 'https://esformsbackend.herokuapp.com/requests/pettycash'
+    // const SUBMIT_URI = 'http://localhost:3001/pettycash'
     const headers = { 'content-type': 'application/json' }
 
     let navigate = useNavigate()
