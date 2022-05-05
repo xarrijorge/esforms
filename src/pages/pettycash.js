@@ -26,8 +26,8 @@ function PettyCash() {
         })
     }
 
-    const SUBMIT_URI = 'https://esformsbackend.herokuapp.com/requests/pettycash'
-    // const SUBMIT_URI = 'http://localhost:3001/pettycash'
+    // const SUBMIT_URI = 'https://esformsbackend.herokuapp.com/requests/pettycash'
+    const SUBMIT_URI = 'http://localhost:3001/pettycash'
     const headers = { 'content-type': 'application/json' }
 
     let navigate = useNavigate()
@@ -64,7 +64,6 @@ function PettyCash() {
                 <section className='banksection'>
                     <span>
                         <TextField
-                            required
                             type='text'
                             size='small'
                             label='Bank Name'
@@ -75,21 +74,10 @@ function PettyCash() {
                     </span>
                     <span>
                         <TextField
-                            required
                             type='text'
                             size='small'
                             label='Bank Account Name'
                             name='accountname'
-                            className='textInput'
-                            onChange={handleBankChange}
-                        />
-                    </span>
-                    <span>
-                        <TextField
-                            type='text'
-                            size='small'
-                            label='Bank Account Number'
-                            name='accountnumber'
                             className='textInput'
                             onChange={handleBankChange}
                         />
@@ -142,6 +130,17 @@ function PettyCash() {
                         <BsFillPlusCircleFill />
                     </button>
                 </section>
+                <span>
+                    <TextField
+                        type='text'
+                        size='small'
+                        label='Link to Invoices Folder'
+                        name='invoices'
+                        className='textInput'
+                        onChange={handleBankChange}
+                    />
+                </span>
+
                 <Button
                     color='primary'
                     variant='outlined'
