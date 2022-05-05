@@ -1,16 +1,15 @@
 import React from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 import '../styles/perdiem.css'
 import {
     TextField,
     Radio,
     RadioGroup,
     FormControlLabel,
-    InputLabel,
-    Select,
-    MenuItem,
     FormLabel,
     Button,
+    CircularProgress,
 } from '@mui/material'
 
 import BasicDatePicker from '../components/BasicDatePicker'
@@ -20,6 +19,7 @@ const PerDiem = () => {
     const [dateValue, setDateValue] = React.useState(null)
     const data = JSON.parse(localStorage.getItem('userdata'))
     const [claim, setClaim] = React.useState(0)
+    const [loading, setLoading] = React.useState(false)
 
     const calculateClaim = () => {
         const nights =
@@ -29,9 +29,8 @@ const PerDiem = () => {
         const mealVal = parseInt(data.Meals.replace(/[^a-z0-9]/gi, '')) * days
         const accVal =
             parseInt(data.Accommodation.replace(/[^a-z0-9]/gi, '')) * nights
-        const fareVal = parseInt(formData.fare) || 0
 
-        const TOTALCLAIM = mealVal + accVal + fareVal
+        const TOTALCLAIM = mealVal + accVal
 
         setClaim(TOTALCLAIM)
         setFormData({ ...formData, TOTALCLAIM: TOTALCLAIM })
@@ -45,11 +44,23 @@ const PerDiem = () => {
         })
         console.log(formData)
     }
+    axios.interceptors.request.use(function (config) {
+        // spinning start to show
+        setLoading(true)
+        return config
+    })
+
+    axios.interceptors.response.use(function (response) {
+        // spinning hide
+        setLoading(false)
+        return response
+    })
+
     const API_URI = 'https://esformsbackend.herokuapp.com/requests/perdiem'
     // const API_URI = 'http://localhost:3001/requests'
     const headers = { 'content-type': 'application/json' }
 
-    // console.log(formik.values)
+    const navigate = useNavigate()
     const handleSubmit = async (e) => {
         e.preventDefault()
         setFormData({
@@ -59,7 +70,7 @@ const PerDiem = () => {
         await axios
             .post(API_URI, formData, headers)
             .then((response) => {
-                console.log(response)
+                navigate('/formselection')
             })
             .catch((err) => {
                 console.log(err)
@@ -122,6 +133,37 @@ const PerDiem = () => {
                         />
                     </div>
                 </div>
+                <FormLabel id='purpose-group-label'>
+                    What is the Purpose of your trip?
+                </FormLabel>
+                <RadioGroup
+                    aria-labelledby='purpose-group-label'
+                    defaultValue='No'
+                    required
+                    onChange={handleChange}
+                    name='purpose'>
+                    <FormControlLabel
+                        value='FSVisit'
+                        control={<Radio />}
+                        label='Field/Site Visit'
+                    />
+                    <FormControlLabel
+                        value='Meeting'
+                        control={<Radio />}
+                        label='Meeting'
+                    />
+                    <FormControlLabel
+                        value='Delivery'
+                        control={<Radio />}
+                        label='Delivery'
+                    />
+                    <FormControlLabel
+                        value='Other'
+                        control={<Radio />}
+                        label='Other'
+                    />
+                </RadioGroup>
+
                 <div className='inputdiv radioset'>
                     <FormLabel id='accommodation-group-label'>
                         Accommodation
@@ -166,138 +208,6 @@ const PerDiem = () => {
                         />
                     </RadioGroup>
                 </div>
-                {formData.transportation === 'Yes' ? (
-                    <div className='inputdiv'>
-                        <h2>Vehicle Request Section</h2>
-                        <div>
-                            <InputLabel id='demo-simple-select-label'>
-                                What Type of Vehicle do you need?
-                            </InputLabel>
-                            <Select
-                                labelId='demo-simple-select-label'
-                                id='demo-simple-select'
-                                value={formData.vehicle}
-                                defaultValue='any'
-                                label='Type of Vehicle'
-                                name='vehicle'
-                                required
-                                onChange={handleChange}>
-                                <MenuItem value='4x4'>
-                                    4x4 Land Cruiser
-                                </MenuItem>
-                                <MenuItem value='van' name='vehicle'>
-                                    Sprinter Van
-                                </MenuItem>
-                                <MenuItem value='Truck' name='vehicle'>
-                                    Truck
-                                </MenuItem>
-                                <MenuItem value='Kehkeh' name='vehicle'>
-                                    Keh Keh
-                                </MenuItem>
-                                <MenuItem value='Motorbike' name='vehicle'>
-                                    Motorbike
-                                </MenuItem>
-                                <MenuItem value='local' name='vehicle'>
-                                    Local Transportation
-                                </MenuItem>
-
-                                <MenuItem value='any' name='vehicle'>
-                                    Any Available Option
-                                </MenuItem>
-                            </Select>
-                            {formData.vehicle === 'local' && (
-                                <div className='inputdiv'>
-                                    <TextField
-                                        label='Transportation Fare'
-                                        defaultValue={0}
-                                        name='fare'
-                                        type='number'
-                                        variant='outlined'
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                            )}
-                        </div>
-                        <FormLabel id='purpose-group-label'>
-                            What is the Purpose of your trip?
-                        </FormLabel>
-                        <RadioGroup
-                            aria-labelledby='purpose-group-label'
-                            defaultValue='No'
-                            required
-                            onChange={handleChange}
-                            name='purpose'>
-                            <FormControlLabel
-                                value='FSVisit'
-                                control={<Radio />}
-                                label='Field/Site Visit'
-                            />
-                            <FormControlLabel
-                                value='Meeting'
-                                control={<Radio />}
-                                label='Meeting'
-                            />
-                            <FormControlLabel
-                                value='Delivery'
-                                control={<Radio />}
-                                label='Delivery'
-                            />
-                            <FormControlLabel
-                                value='Other'
-                                control={<Radio />}
-                                label='Other'
-                            />
-                        </RadioGroup>
-                        <FormLabel id='daytrip-group-label'>
-                            Is it a one day trip?
-                        </FormLabel>
-                        <RadioGroup
-                            aria-labelledby='daytrip-group-label'
-                            defaultValue='No'
-                            onChange={handleChange}
-                            row
-                            name='onedaytrip'>
-                            <FormControlLabel
-                                value='Yes'
-                                control={<Radio />}
-                                label='Yes'
-                            />
-                            <FormControlLabel
-                                value='No'
-                                control={<Radio />}
-                                label='No'
-                            />
-                        </RadioGroup>
-                        <div className='inputdiv'>
-                            <TextField
-                                label='Number of passengers'
-                                name='passengers'
-                                type='number'
-                                InputProps={{
-                                    readOnly: false,
-                                    min: 0,
-                                    max: 10,
-                                }}
-                                variant='outlined'
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className='inputdiv'>
-                            <TextField
-                                label='Are there any special requests?'
-                                name='requests'
-                                type='text'
-                                multiline
-                                rows={4}
-                                InputProps={{
-                                    readOnly: false,
-                                }}
-                                variant='outlined'
-                                onChange={handleChange}
-                            />
-                        </div>
-                    </div>
-                ) : null}
                 <Button
                     disabled={
                         formData.accommodation === 'Yes' ||
@@ -322,14 +232,13 @@ const PerDiem = () => {
                         onChange={handleChange}
                     />
                 </div>
-
                 <Button
                     color='primary'
                     variant='outlined'
                     type='submit'
                     size='large'
                     className='submitButton'>
-                    Submit
+                    {loading ? <CircularProgress color='inherit' /> : 'submit'}
                 </Button>
             </form>
         </div>

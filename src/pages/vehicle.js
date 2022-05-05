@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 import '../styles/vehicle.css'
 import {
     TextField,
@@ -11,28 +12,45 @@ import {
     MenuItem,
     FormLabel,
     Button,
+    CircularProgress,
 } from '@mui/material'
 
 import BasicDatePicker from '../components/BasicDatePicker'
 
 const Vehicle = () => {
     const [formData, setFormData] = React.useState({})
-    const [dateValue, setDateValue] = React.useState(null)
+    const [depature, setDepature] = React.useState(null)
+    const [returnDate, setReturn] = React.useState(null)
     const data = JSON.parse(localStorage.getItem('userdata'))
+    const [loading, setLoading] = React.useState(false)
 
     const handleChange = (e) => {
         e.preventDefault()
         setFormData({
             ...formData,
             [e.target.name]: e.target.value.trim(),
+            depaturedate: depature.toDateString(),
+            returndate: returnDate.toDateString(),
         })
         console.log(formData)
     }
-    const API_URI = 'https://esformsbackend.herokuapp.com/requests/vehicle'
-    // const API_URI = 'http://localhost:3001/requests'
+    axios.interceptors.request.use(function (config) {
+        // spinning start to show
+        setLoading(true)
+        return config
+    })
+
+    axios.interceptors.response.use(function (response) {
+        // spinning hide
+        setLoading(false)
+        return response
+    })
+
+    // const API_URI = 'https://esformsbackend.herokuapp.com/requests/vehicle'
+    const API_URI = 'http://localhost:3001/requests'
     const headers = { 'content-type': 'application/json' }
 
-    // console.log(formik.values)
+    const navigate = useNavigate()
     const handleSubmit = async (e) => {
         setFormData({
             ...formData,
@@ -41,7 +59,7 @@ const Vehicle = () => {
         await axios
             .post(API_URI, formData, headers)
             .then((response) => {
-                console.log(response)
+                navigate('/formselection')
             })
             .catch((err) => {
                 console.log(err)
@@ -57,11 +75,19 @@ const Vehicle = () => {
                 <div>
                     <div className='inputdiv'>
                         <BasicDatePicker
-                            dateValue={dateValue}
-                            setDateValue={setDateValue}
+                            dateValue={depature}
+                            setDateValue={setDepature}
                             label='Date Vehicle is needed?'
                         />
                     </div>
+                    <div className='inputdiv'>
+                        <BasicDatePicker
+                            dateValue={returnDate}
+                            setDateValue={setReturn}
+                            label='Return Date'
+                        />
+                    </div>
+
                     <InputLabel id='demo-simple-select-label'>
                         What Type of Vehicle do you need?
                     </InputLabel>
@@ -162,7 +188,7 @@ const Vehicle = () => {
                     type='submit'
                     size='large'
                     className='submitButton'>
-                    Submit
+                    {loading ? <CircularProgress color='inherit' /> : 'submit'}
                 </Button>
             </form>
         </div>

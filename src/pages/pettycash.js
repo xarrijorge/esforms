@@ -5,13 +5,14 @@ import { useNavigate } from 'react-router-dom'
 import '../styles/pettycash.css'
 
 import { BsFillPlusCircleFill } from 'react-icons/bs'
-import { TextField, Button } from '@mui/material'
+import { TextField, Button, CircularProgress } from '@mui/material'
 
 function PettyCash() {
     const [list, setList] = React.useState([<Item count={0} />])
     const [itemsData, setitemsData] = React.useState({})
     const [submitData, setSubmitData] = React.useState({})
     const [bankDetails, setBankDetails] = React.useState({})
+    const [loading, setLoading] = React.useState(false)
 
     const data = JSON.parse(localStorage.getItem('userdata'))
 
@@ -25,7 +26,17 @@ function PettyCash() {
             [e.target.name]: e.target.value,
         })
     }
+    axios.interceptors.request.use(function (config) {
+        // spinning start to show
+        setLoading(true)
+        return config
+    })
 
+    axios.interceptors.response.use(function (response) {
+        // spinning hide
+        setLoading(false)
+        return response
+    })
     const SUBMIT_URI = 'https://esformsbackend.herokuapp.com/requests/pettycash'
     // const SUBMIT_URI = 'http://localhost:3001/pettycash'
     const headers = { 'content-type': 'application/json' }
@@ -147,7 +158,7 @@ function PettyCash() {
                     type='submit'
                     size='large'
                     className='submitButton'>
-                    Submit
+                    {loading ? <CircularProgress color='inherit' /> : 'submit'}
                 </Button>
             </form>
         </div>
