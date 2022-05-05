@@ -41,12 +41,12 @@ const PerDiem = () => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value.trim(),
-            date: dateValue.toDateString(),
+            date: dateValue.toDateString() || '',
         })
         console.log(formData)
     }
-    const API_URI = 'https://esformsbackend.herokuapp.com/requests/perdiem'
-    // const API_URI = 'http://localhost:3001/requests'
+    // const API_URI = 'https://esformsbackend.herokuapp.com/requests/perdiem'
+    const API_URI = 'http://localhost:3001/requests'
     const headers = { 'content-type': 'application/json' }
 
     // console.log(formik.values)
@@ -121,28 +121,6 @@ const PerDiem = () => {
                             onChange={handleChange}
                         />
                     </div>
-                </div>
-                <div className='inputdiv radioset'>
-                    <FormLabel id='transportation-group-label'>
-                        Transportation
-                    </FormLabel>
-                    <RadioGroup
-                        aria-labelledby='transportation-group-label'
-                        defaultValue='No'
-                        row
-                        onChange={handleChange}
-                        name='transportation'>
-                        <FormControlLabel
-                            value='Yes'
-                            control={<Radio />}
-                            label='Yes'
-                        />
-                        <FormControlLabel
-                            value='No'
-                            control={<Radio />}
-                            label='No'
-                        />
-                    </RadioGroup>
                 </div>
                 <div className='inputdiv radioset'>
                     <FormLabel id='accommodation-group-label'>
