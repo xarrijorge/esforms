@@ -88,6 +88,45 @@ const Vehicle = () => {
                         />
                     </div>
 
+                    <FormLabel id='daytrip-group-label'>
+                        Are you requesting for someone?
+                    </FormLabel>
+                    <RadioGroup
+                        aria-labelledby='daytrip-group-label'
+                        defaultValue='No'
+                        onChange={handleChange}
+                        row
+                        name='thirdpartyrequest'>
+                        <FormControlLabel
+                            value='Yes'
+                            control={<Radio />}
+                            label='Yes'
+                        />
+                        <FormControlLabel
+                            value='No'
+                            control={<Radio />}
+                            label='No'
+                        />
+                    </RadioGroup>
+                    {formData.thirdpartyrequest === 'Yes' && (
+                        <div className='inputdiv'>
+                            <TextField
+                                label='Person Name'
+                                name='thirpartyname'
+                                type='text'
+                                variant='outlined'
+                                onChange={handleChange}
+                            />
+                            <TextField
+                                label='Person Email'
+                                name='thirdpartyemail'
+                                type='text'
+                                variant='outlined'
+                                onChange={handleChange}
+                            />
+                        </div>
+                    )}
+
                     <InputLabel id='demo-simple-select-label'>
                         What Type of Vehicle do you need?
                     </InputLabel>
