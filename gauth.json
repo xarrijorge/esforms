@@ -1,0 +1,18 @@
+{
+    "web": {
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "client_secret": "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",
+        "redirect_uris": [
+            "https://request.sl.easysolar.org/formselection",
+            "https://request.lib.easysolar.org/formselection",
+            "https://esforms.netlify.app/formselection"
+        ],
+        "javascript_origins": [
+            "https://esforms.netlify.app",
+            "https://request.lib.easysolar.org",
+            "https://request.sl.easysolar.org"
+        ]
+    }
+}

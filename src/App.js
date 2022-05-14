@@ -6,11 +6,22 @@ import Home from './components/Home'
 import './App.css'
 
 function App() {
-    const [inputVal, setInputVal] = React.useState('')
-    const [buttonDisabled, setButtonDisabled] = React.useState(true)
     const [loading, setLoading] = React.useState(false)
+    const CLIENT_ID = process.env.REACT_APP_CLIENT_ID
+    let navigate = useNavigate()
+    const responseGoogle = async (res) => {
+        await axios
+            .get(
+                `https://esformsbackend.herokuapp.com/users?email=${res.profileObj.email}`
+            )
+            .then((res) => res.data)
+            .then((data) => {
+                window.localStorage.setItem('userdata', JSON.stringify(data))
+                navigate('/formselection')
+            })
 
-    const API_URI = `https://esformsbackend.herokuapp.com/users?email=${inputVal}`
+        console.log(res.profileObj.email)
+    }
 
     axios.interceptors.request.use(function (config) {
         // spinning start to show
@@ -23,46 +34,10 @@ function App() {
         setLoading(false)
         return response
     })
-    let navigate = useNavigate()
-    const GetData = React.useCallback(async () => {
-        console.log(API_URI)
-        await axios
-            .get(API_URI)
-            .then((res) => res.data)
-            .then((data) => {
-                window.localStorage.setItem('userdata', JSON.stringify(data))
-                navigate('/formselection')
-            })
-    }, [API_URI, navigate])
-
-    const handleInputChange = (event) => {
-        event.preventDefault()
-        setInputVal(event.target.value)
-        if (inputVal.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,3}$/gi)) {
-            setButtonDisabled(false)
-        } else {
-            setButtonDisabled(true)
-        }
-    }
-    React.useEffect(
-        (e) => {
-            inputVal.match(/[a-z.]+@[slib.]{0,4}?[easysolar]+\.[org]{3}/g)
-                ? setButtonDisabled(false)
-                : setButtonDisabled(true)
-            //it triggers by pressing the enter key
-        },
-        [inputVal, GetData]
-    )
 
     return (
         <div className='App'>
-            <Home
-                inputVal={inputVal}
-                handleClick={GetData}
-                handleInputChange={handleInputChange}
-                buttonDisabled={buttonDisabled}
-                loading={loading}
-            />
+            <Home res={responseGoogle} id={CLIENT_ID} loading={loading} />
         </div>
     )
 }

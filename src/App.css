@@ -11,44 +11,18 @@ form {
 
 /* ////// Home Page styles ///////// */
 .homepage {
-    width: 100vw;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    color: goldenrod;
+    margin-top: -100px;
 }
-.homeinput {
-    width: 80vw;
-    max-width: 400px;
-    height: 35px;
-    margin: 20px 0;
-    font-size: 18px;
-    font-weight: 200;
-    letter-spacing: 2px;
-    text-align: center;
-    color: #1565C0;
+.homeImage{
+    width: 300px;
+    max-width: 300px;
 }
-.homeinput:focus{
-outline-color: #1565C0;
-color: #141414;
-}
-
-.homebutton {
-    width: 150px;
-    height: auto;
-    border-radius: 5px;
-    color: #fff;
-    font-size: 18px;
-    cursor: pointer;
-}
-.homebutton[disabled] {
-    background-color: grey;
-}
-
-.greeting, .homegreeting{
-    text-align: center;
-    font-size: calc(1.2em + 0.5vw);
+.outtext{
+    margin: 0 20px;
 }
 
 
@@ -94,4 +68,3 @@ color: #141414;
     margin-top: 15vh;
     margin-bottom: 20px;
 }
-
