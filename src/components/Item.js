@@ -1,7 +1,7 @@
 import React from 'react'
 import TextField from '@mui/material/TextField'
 
-const Item = ({ count, data, setData }) => {
+const Item = ({ count, data, setData, setItemsTotal, itemsTotal }) => {
     const [unitCost, setCost] = React.useState(1)
     const [amount, setAmount] = React.useState(1)
     const [itemName, setItemName] = React.useState('')
@@ -24,7 +24,18 @@ const Item = ({ count, data, setData }) => {
                 total: total,
             },
         })
-    }, [itemName, description, amount, unitCost, total, count, data, setData])
+    }, [
+        itemName,
+        description,
+        amount,
+        unitCost,
+        total,
+        count,
+        data,
+        setData,
+        itemsTotal,
+        setItemsTotal,
+    ])
 
     return (
         <div className='elDiv'>

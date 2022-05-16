@@ -46,8 +46,8 @@ const Vehicle = () => {
         return response
     })
 
-    // const API_URI = 'https://esformsbackend.herokuapp.com/requests/vehicle'
-    const API_URI = 'http://localhost:3001/requests'
+    const API_URI = 'https://esformsbackend.herokuapp.com/requests/vehicle'
+    // const API_URI = 'http://localhost:3001/requests'
     const headers = { 'content-type': 'application/json' }
 
     const navigate = useNavigate()

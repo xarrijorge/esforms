@@ -1,31 +1,30 @@
 import React from 'react'
 import axios from 'axios'
 import Item from '../components/Item'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import '../styles/pettycash.css'
 
 import { BsFillPlusCircleFill } from 'react-icons/bs'
-import { TextField, Button, CircularProgress } from '@mui/material'
+import {
+    TextField,
+    Radio,
+    RadioGroup,
+    FormControlLabel,
+    FormLabel,
+    Button,
+    CircularProgress,
+} from '@mui/material'
 
 function PettyCash() {
-    const [list, setList] = React.useState([<Item count={0} />])
     const [itemsData, setitemsData] = React.useState({})
+    const [itemsTotal, setItemsTotal] = React.useState([])
     const [submitData, setSubmitData] = React.useState({})
+    const [list, setList] = React.useState([<Item count={0} />])
     const [bankDetails, setBankDetails] = React.useState({})
+    const [currency, setCurrency] = React.useState('USD')
     const [loading, setLoading] = React.useState(false)
 
     const data = JSON.parse(localStorage.getItem('userdata'))
-
-    const updateList = (e) => {
-        e.preventDefault()
-        setList([...list, <Item />])
-    }
-    const handleBankChange = (e) => {
-        setBankDetails({
-            ...bankDetails,
-            [e.target.name]: e.target.value,
-        })
-    }
     axios.interceptors.request.use(function (config) {
         // spinning start to show
         setLoading(true)
@@ -37,24 +36,54 @@ function PettyCash() {
         setLoading(false)
         return response
     })
+
+    const updateList = (e) => {
+        e.preventDefault()
+        setList([...list, <Item />])
+    }
+
+    let USD_Total = 500
+    // let LRD_Total = 92500
+    // let SLL_Total = 6413630
+
+    // const checkTotal = () => {}
+
+    const handleBankChange = (e) => {
+        setBankDetails({
+            ...bankDetails,
+            [e.target.name]: e.target.value,
+            currency: currency,
+        })
+    }
     const SUBMIT_URI = 'https://esformsbackend.herokuapp.com/requests/pettycash'
     // const SUBMIT_URI = 'http://localhost:3001/pettycash'
     const headers = { 'content-type': 'application/json' }
 
-    let navigate = useNavigate()
+    // let navigate = useNavigate()
     const handleSubmit = async (e) => {
         e.preventDefault()
-        await axios
-            .post(SUBMIT_URI, { ...submitData, user: data }, headers)
-            .then((response) => {
-                console.log(response)
-                navigate('/formselection')
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+        console.log(itemsTotal)
+        if (currency === 'USD' && itemsTotal > USD_Total) {
+            alert(
+                `Amount greater than ${USD_Total} USD. Please use a payment request instead`
+            )
+            return
+            // return navigate('/formseletion')
+        } else {
+            // await axios
+            //     .post(SUBMIT_URI, { ...submitData, user: data }, headers)
+            //     .then((response) => {
+            //         console.log(response)
+            //         // navigate('/formselection')
+            //     })
+            //     .catch((err) => {
+            //         console.log(err)
+            //     })
+        }
+
         console.log({ ...submitData, user: data })
     }
+
     React.useEffect(() => {
         delete itemsData['']
         Object.keys(itemsData)
@@ -62,7 +91,7 @@ function PettyCash() {
             .forEach((key) => delete itemsData[key])
 
         setSubmitData({ ...bankDetails, items: { ...itemsData } })
-    }, [itemsData, bankDetails])
+    }, [itemsData, bankDetails, itemsTotal])
 
     return (
         <div className='pettycashForm'>
@@ -123,6 +152,35 @@ function PettyCash() {
                             onChange={handleBankChange}
                         />
                     </span>
+                    {/* currency selection section */}
+                    <div>
+                        <FormLabel id='purpose-group-label'>
+                            Please Select Your Currency
+                        </FormLabel>
+                        <RadioGroup
+                            aria-labelledby='purpose-group-label'
+                            defaultValue='USD'
+                            required
+                            row
+                            onChange={(e) => setCurrency(e.target.value)}
+                            name='currency'>
+                            <FormControlLabel
+                                value='USD'
+                                control={<Radio />}
+                                label='USD'
+                            />
+                            <FormControlLabel
+                                value='SLL'
+                                control={<Radio />}
+                                label='SLL'
+                            />
+                            <FormControlLabel
+                                value='LRD'
+                                control={<Radio />}
+                                label='LRD'
+                            />
+                        </RadioGroup>
+                    </div>
                 </section>
                 <section className='requestSection'>
                     <h3>Request Section</h3>
