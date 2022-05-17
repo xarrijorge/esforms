@@ -57,7 +57,7 @@ const Vehicle = () => {
             [e.target.name]: e.target.value,
         })
         await axios
-            .post(API_URI, formData, headers)
+            .post(API_URI, { ...formData, user: data }, headers)
             .then((response) => {
                 navigate('/formselection')
             })

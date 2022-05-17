@@ -56,7 +56,7 @@ function PettyCash() {
         })
     }
     const SUBMIT_URI = 'https://esformsbackend.herokuapp.com/requests/pettycash'
-    // const SUBMIT_URI = 'http://localhost:3001/pettycash'
+    // const SUBMIT_URI = 'http://localhost:3001/requests/pettycash'
     const headers = { 'content-type': 'application/json' }
 
     let navigate = useNavigate()
@@ -73,7 +73,7 @@ function PettyCash() {
                 .post(SUBMIT_URI, { ...submitData, user: data }, headers)
                 .then((response) => {
                     console.log(response)
-                    // navigate('/formselection')
+                    navigate('/formselection')
                 })
                 .catch((err) => {
                     console.log(err)

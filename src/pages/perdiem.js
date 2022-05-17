@@ -57,7 +57,7 @@ const PerDiem = () => {
     })
 
     const API_URI = 'https://esformsbackend.herokuapp.com/requests/perdiem'
-    // const API_URI = 'http://localhost:3001/requests'
+    // const API_URI = 'http://localhost:3001/requests/perdiem'
     const headers = { 'content-type': 'application/json' }
 
     const navigate = useNavigate()
@@ -68,8 +68,9 @@ const PerDiem = () => {
             [e.target.name]: e.target.value,
         })
         await axios
-            .post(API_URI, formData, headers)
+            .post(API_URI, { ...formData, user: data }, headers)
             .then((response) => {
+                console.log(formData)
                 navigate('/formselection')
             })
             .catch((err) => {
