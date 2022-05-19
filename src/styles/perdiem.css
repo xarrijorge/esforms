@@ -8,11 +8,6 @@
     align-items: center;
 }
 
-.greeting {
-    text-align: center;
-    font-size: 1.5rem;
-}
-
 .inputdiv {
     margin: 25px 0;
     width: 300px;

@@ -1,11 +1,13 @@
 import React from 'react'
 import axios from 'axios'
+import Greeting from '../components/greeting'
 import { useNavigate } from 'react-router-dom'
 import '../styles/vehicle.css'
 import {
     TextField,
     Radio,
     RadioGroup,
+    FormControl,
     FormControlLabel,
     InputLabel,
     Select,
@@ -19,7 +21,7 @@ import BasicDatePicker from '../components/BasicDatePicker'
 
 const Vehicle = () => {
     const [formData, setFormData] = React.useState({})
-    const [depature, setDepature] = React.useState(null)
+    const [departureDate, setDeparture] = React.useState(null)
     const [returnDate, setReturn] = React.useState(null)
     const data = JSON.parse(localStorage.getItem('userdata'))
     const [loading, setLoading] = React.useState(false)
@@ -29,8 +31,8 @@ const Vehicle = () => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value.trim(),
-            depaturedate: depature.toDateString(),
-            returndate: returnDate.toDateString(),
+            departuredate: departureDate,
+            returndate: returnDate || departureDate,
         })
         console.log(formData)
     }
@@ -46,18 +48,31 @@ const Vehicle = () => {
         return response
     })
 
-    const API_URI = 'https://esformsbackend.herokuapp.com/requests/vehicle'
-    // const API_URI = 'http://localhost:3001/requests'
+    // const API_URI = 'https://esformsbackend.herokuapp.com/requests/vehicle'
+    const API_URI = 'http://localhost:3001/requests/vehicle'
     const headers = { 'content-type': 'application/json' }
 
     const navigate = useNavigate()
     const handleSubmit = async (e) => {
+        e.preventDefault()
         setFormData({
             ...formData,
             [e.target.name]: e.target.value,
         })
         await axios
-            .post(API_URI, { ...formData, user: data }, headers)
+            .post(
+                API_URI,
+                {
+                    ...formData,
+                    departuredate: departureDate.toDateString(),
+                    returndate:
+                        returnDate !== null
+                            ? returnDate.toDateString()
+                            : departureDate.toDateString(),
+                    user: data,
+                },
+                headers
+            )
             .then((response) => {
                 navigate('/formselection')
             })
@@ -68,23 +83,58 @@ const Vehicle = () => {
 
     return (
         <div className='vehicleForm'>
-            <h2 className='greeting'>
-                Welcome, {data['First Name']}. Please Fill out the details below
-            </h2>
+            <Greeting user={data['First Name']} />
+
             <form className='mainForm' onSubmit={handleSubmit}>
                 <div>
                     <div className='inputdiv'>
                         <BasicDatePicker
-                            dateValue={depature}
-                            setDateValue={setDepature}
+                            dateValue={departureDate}
+                            setDateValue={setDeparture}
                             label='Date Vehicle is needed?'
+                            required
                         />
                     </div>
+                    <FormLabel id='daytrip-group-label'>
+                        Is it a one day trip?
+                    </FormLabel>
+                    <RadioGroup
+                        aria-labelledby='daytrip-group-label'
+                        defaultValue='Yes'
+                        onChange={handleChange}
+                        row
+                        name='onedaytrip'>
+                        <FormControlLabel
+                            value='Yes'
+                            control={<Radio />}
+                            label='Yes'
+                        />
+                        <FormControlLabel
+                            value='No'
+                            control={<Radio />}
+                            label='No'
+                        />
+                    </RadioGroup>
+
+                    {formData.onedaytrip === 'No' ? (
+                        <div className='inputdiv'>
+                            <BasicDatePicker
+                                dateValue={returnDate}
+                                setDateValue={setReturn}
+                                label='Return Date'
+                            />
+                        </div>
+                    ) : null}
                     <div className='inputdiv'>
-                        <BasicDatePicker
-                            dateValue={returnDate}
-                            setDateValue={setReturn}
-                            label='Return Date'
+                        <TextField
+                            label='Destination'
+                            name='destination'
+                            required
+                            InputProps={{
+                                readOnly: false,
+                            }}
+                            variant='outlined'
+                            onChange={handleChange}
                         />
                     </div>
 
@@ -126,36 +176,39 @@ const Vehicle = () => {
                             />
                         </div>
                     )}
-
-                    <InputLabel id='demo-simple-select-label'>
-                        What Type of Vehicle do you need?
-                    </InputLabel>
-                    <Select
-                        labelId='demo-simple-select-label'
-                        id='demo-simple-select'
-                        value={formData.vehicle}
-                        defaultValue='any'
-                        label='Type of Vehicle'
-                        name='vehicle'
-                        required
-                        onChange={handleChange}>
-                        <MenuItem value='4x4'>4x4 Land Cruiser</MenuItem>
-                        <MenuItem value='van' name='vehicle'>
-                            Sprinter Van
-                        </MenuItem>
-                        <MenuItem value='Truck' name='vehicle'>
-                            Truck
-                        </MenuItem>
-                        <MenuItem value='Kehkeh' name='vehicle'>
-                            Keh Keh
-                        </MenuItem>
-                        <MenuItem value='Motorbike' name='vehicle'>
-                            Motorbike
-                        </MenuItem>
-                        <MenuItem value='any' name='vehicle'>
-                            Any Available Option
-                        </MenuItem>
-                    </Select>
+                    <FormControl sx={{ m: 1, minWidth: 200 }} size='small'>
+                        <InputLabel id='demo-simple-select-label'>
+                            What Type of Vehicle do you need?
+                        </InputLabel>
+                        <Select
+                            labelId='demo-simple-select-label'
+                            id='demo-simple-select'
+                            value={formData.vehicle}
+                            placeholder='Select One'
+                            label='Type of Vehicle'
+                            name='vehicle'
+                            required
+                            onChange={handleChange}>
+                            <MenuItem required value='4x4'>
+                                4x4 Land Cruiser
+                            </MenuItem>
+                            <MenuItem value='van' name='vehicle'>
+                                Sprinter Van
+                            </MenuItem>
+                            <MenuItem value='Truck' name='vehicle'>
+                                Truck
+                            </MenuItem>
+                            <MenuItem value='Kehkeh' name='vehicle'>
+                                Keh Keh
+                            </MenuItem>
+                            <MenuItem value='Motorbike' name='vehicle'>
+                                Motorbike
+                            </MenuItem>
+                            <MenuItem value='any' name='vehicle'>
+                                Any Available Option
+                            </MenuItem>
+                        </Select>
+                    </FormControl>
                 </div>
                 <FormLabel id='purpose-group-label'>
                     What is the Purpose of your trip?
@@ -168,7 +221,7 @@ const Vehicle = () => {
                     name='purpose'>
                     <FormControlLabel
                         value='FSVisit'
-                        control={<Radio />}
+                        control={<Radio required />}
                         label='Field/Site Visit'
                     />
                     <FormControlLabel
@@ -187,26 +240,6 @@ const Vehicle = () => {
                         label='Other'
                     />
                 </RadioGroup>
-                <FormLabel id='daytrip-group-label'>
-                    Is it a one day trip?
-                </FormLabel>
-                <RadioGroup
-                    aria-labelledby='daytrip-group-label'
-                    defaultValue='No'
-                    onChange={handleChange}
-                    row
-                    name='onedaytrip'>
-                    <FormControlLabel
-                        value='Yes'
-                        control={<Radio />}
-                        label='Yes'
-                    />
-                    <FormControlLabel
-                        value='No'
-                        control={<Radio />}
-                        label='No'
-                    />
-                </RadioGroup>
                 <div className='inputdiv'>
                     <TextField
                         label='Number of passengers'
@@ -221,6 +254,16 @@ const Vehicle = () => {
                         onChange={handleChange}
                     />
                 </div>
+                <span>
+                    <TextField
+                        type='text'
+                        size='small'
+                        label='Route Distribution Plan'
+                        name='routeplan'
+                        className='textInput'
+                    />
+                </span>
+
                 <Button
                     color='primary'
                     variant='outlined'

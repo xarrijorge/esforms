@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import Greeting from '../components/greeting'
 import Item from '../components/Item'
 import { useNavigate } from 'react-router-dom'
 import '../styles/pettycash.css'
@@ -55,8 +56,8 @@ function PettyCash() {
             currency: currency,
         })
     }
-    const SUBMIT_URI = 'https://esformsbackend.herokuapp.com/requests/pettycash'
-    // const SUBMIT_URI = 'http://localhost:3001/requests/pettycash'
+    // const SUBMIT_URI = 'https://esformsbackend.herokuapp.com/requests/pettycash'
+    const SUBMIT_URI = 'http://localhost:3001/requests/pettycash'
     const headers = { 'content-type': 'application/json' }
 
     let navigate = useNavigate()
@@ -94,11 +95,8 @@ function PettyCash() {
 
     return (
         <div className='pettycashForm'>
+            <Greeting user={data['First Name']} />
             <form onSubmit={handleSubmit}>
-                <h2>
-                    Welcome, {data['First Name']}. Please fill out the form
-                    below.
-                </h2>
                 <h3>Bank Details Section</h3>
                 <section className='banksection'>
                     <span>

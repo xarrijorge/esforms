@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import Greeting from '../components/greeting'
 import '../styles/perdiem.css'
 import {
     TextField,
@@ -56,8 +57,8 @@ const PerDiem = () => {
         return response
     })
 
-    const API_URI = 'https://esformsbackend.herokuapp.com/requests/perdiem'
-    // const API_URI = 'http://localhost:3001/requests/perdiem'
+    // const API_URI = 'https://esformsbackend.herokuapp.com/requests/perdiem'
+    const API_URI = 'http://localhost:3001/requests/perdiem'
     const headers = { 'content-type': 'application/json' }
 
     const navigate = useNavigate()
@@ -80,9 +81,7 @@ const PerDiem = () => {
 
     return (
         <div className='perdiemform'>
-            <h2 className='greeting'>
-                Welcome, {data['First Name']}. Please Fill out the details below
-            </h2>
+            <Greeting user={data['First Name']} />
             <form className='mainForm' onSubmit={handleSubmit}>
                 <div>
                     <div className='inputdiv'>
