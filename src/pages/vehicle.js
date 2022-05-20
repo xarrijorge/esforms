@@ -216,7 +216,6 @@ const Vehicle = () => {
                 <RadioGroup
                     aria-labelledby='purpose-group-label'
                     defaultValue='No'
-                    required
                     onChange={handleChange}
                     name='purpose'>
                     <FormControlLabel
