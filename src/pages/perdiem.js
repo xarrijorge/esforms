@@ -205,7 +205,6 @@ const PerDiem = () => {
                     aria-labelledby='purpose-group-label'
                     defaultValue='No'
                     required
-                    onChange={handleChange}
                     name='purpose'>
                     <FormControlLabel
                         value='FSVisit'
@@ -235,6 +234,7 @@ const PerDiem = () => {
                         label='Please specify'
                         name='other_specify'
                         className='textInput'
+                        onChange={handleChange}
                     />
                 ) : null}
 
