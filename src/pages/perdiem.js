@@ -7,35 +7,49 @@ import {
     TextField,
     Radio,
     RadioGroup,
+    FormControl,
     FormControlLabel,
     FormLabel,
+    InputLabel,
+    OutlinedInput,
     Button,
     CircularProgress,
+    InputAdornment,
 } from '@mui/material'
 
 import BasicDatePicker from '../components/BasicDatePicker'
 
 const PerDiem = () => {
     const [formData, setFormData] = React.useState({})
-    const [dateValue, setDateValue] = React.useState(null)
+    const [dateValue, setDateValue] = React.useState(new Date())
     const data = JSON.parse(localStorage.getItem('userdata'))
     const [claim, setClaim] = React.useState(0)
     const [loading, setLoading] = React.useState(false)
 
-    const calculateClaim = () => {
-        const nights =
-            formData.nights !== 'No' ? parseInt(formData.nights) : null
-        const days = formData.days !== 'No' ? parseInt(formData.days) : null
+    const currencyLabel = window.location.href.includes('lib') ? 'LRD' : 'LE'
+
+    const calculateClaim = React.useCallback(() => {
+        let nights =
+            formData.accommodation !== 'No' ? parseInt(formData.nights) : 0
+        let days = parseInt(formData.days) || 1
+
+        if (days <= 0) {
+            days = 1
+        }
+        if (nights <= 0) {
+            nights = 0
+        }
 
         const mealVal = parseInt(data.Meals.replace(/[^a-z0-9]/gi, '')) * days
         const accVal =
             parseInt(data.Accommodation.replace(/[^a-z0-9]/gi, '')) * nights
 
-        const TOTALCLAIM = mealVal + accVal
+        const TOTALCLAIM = nights > 0 ? mealVal + accVal : mealVal
 
         setClaim(TOTALCLAIM)
         setFormData({ ...formData, TOTALCLAIM: TOTALCLAIM })
-    }
+    }, [data.Meals, data.Accommodation, formData])
+
     const handleChange = (e) => {
         e.preventDefault()
         setFormData({
@@ -79,6 +93,10 @@ const PerDiem = () => {
             })
     }
 
+    React.useEffect(() => {
+        calculateClaim()
+    }, [calculateClaim])
+
     return (
         <div className='perdiemform'>
             <Greeting user={data['First Name']} />
@@ -104,34 +122,81 @@ const PerDiem = () => {
                     </div>
                     <div className='inputdiv'>
                         <TextField
-                            label='Number of Nights'
-                            required
-                            name='nights'
-                            type='number'
-                            InputProps={{
-                                readOnly: false,
-                                min: 0,
-                                max: 10,
-                            }}
-                            variant='outlined'
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div className='inputdiv'>
-                        <TextField
                             label='Number of Days'
+                            defaultValue={1}
                             required
                             name='days'
                             type='number'
                             InputProps={{
                                 readOnly: false,
-                                min: 0,
-                                max: 10,
+                                min: 1,
+                                max: 30,
                             }}
                             variant='outlined'
                             onChange={handleChange}
                         />
                     </div>
+                    <div className='inputdiv radioset'>
+                        <FormLabel id='accommodation-group-label'>
+                            Accommodation
+                        </FormLabel>
+                        <RadioGroup
+                            aria-labelledby='accommodation-group-label'
+                            defaultValue='No'
+                            row
+                            onChange={handleChange}
+                            name='accommodation'>
+                            <FormControlLabel
+                                value='Yes'
+                                control={<Radio />}
+                                label='Yes'
+                            />
+                            <FormControlLabel
+                                value='No'
+                                control={<Radio />}
+                                label='No'
+                            />
+                        </RadioGroup>
+                    </div>
+                    {formData.accommodation === 'Yes' ? (
+                        <div className='inputdiv'>
+                            <TextField
+                                label='Number of Nights'
+                                required
+                                name='nights'
+                                type='number'
+                                InputProps={{
+                                    readOnly: false,
+                                    min: 0,
+                                    max: 30,
+                                }}
+                                variant='outlined'
+                                onChange={handleChange}
+                            />
+                        </div>
+                    ) : null}
+                    {/* <div className='inputdiv radioset'>
+                        <FormLabel id='demo-radio-buttons-group-label'>
+                            Meals
+                        </FormLabel>
+                        <RadioGroup
+                            aria-labelledby='meals-group-label'
+                            defaultValue='No'
+                            row
+                            onChange={handleChange}
+                            name='meals'>
+                            <FormControlLabel
+                                value='Yes'
+                                control={<Radio />}
+                                label='Yes'
+                            />
+                            <FormControlLabel
+                                value='No'
+                                control={<Radio />}
+                                label='No'
+                            />
+                        </RadioGroup>
+                    </div> */}
                 </div>
                 <FormLabel id='purpose-group-label'>
                     What is the Purpose of your trip?
@@ -163,74 +228,33 @@ const PerDiem = () => {
                         label='Other'
                     />
                 </RadioGroup>
-
-                <div className='inputdiv radioset'>
-                    <FormLabel id='accommodation-group-label'>
-                        Accommodation
-                    </FormLabel>
-                    <RadioGroup
-                        aria-labelledby='accommodation-group-label'
-                        defaultValue='No'
-                        row
-                        onChange={handleChange}
-                        name='accommodation'>
-                        <FormControlLabel
-                            value='Yes'
-                            control={<Radio />}
-                            label='Yes'
-                        />
-                        <FormControlLabel
-                            value='No'
-                            control={<Radio />}
-                            label='No'
-                        />
-                    </RadioGroup>
-                </div>
-                <div className='inputdiv radioset'>
-                    <FormLabel id='demo-radio-buttons-group-label'>
-                        Meals
-                    </FormLabel>
-                    <RadioGroup
-                        aria-labelledby='meals-group-label'
-                        defaultValue='No'
-                        row
-                        onChange={handleChange}
-                        name='meals'>
-                        <FormControlLabel
-                            value='Yes'
-                            control={<Radio />}
-                            label='Yes'
-                        />
-                        <FormControlLabel
-                            value='No'
-                            control={<Radio />}
-                            label='No'
-                        />
-                    </RadioGroup>
-                </div>
-                <Button
-                    disabled={
-                        formData.accommodation === 'Yes' ||
-                        formData.meals === 'Yes'
-                            ? false
-                            : true
-                    }
-                    variant='outlined'
-                    onClick={calculateClaim}>
-                    Calculate Claim
-                </Button>
-                <div className='inputdiv'>
+                {formData.purpose === 'Other' ? (
                     <TextField
-                        label='Total Claim'
-                        name='totalclaim'
-                        value={claim}
                         type='text'
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                        variant='outlined'
-                        onChange={handleChange}
+                        size='small'
+                        label='Please specify'
+                        name='other_specify'
+                        className='textInput'
                     />
+                ) : null}
+
+                <div className='inputdiv'>
+                    <FormControl>
+                        <InputLabel htmlFor='outlined-adornment-amount'>
+                            Total Claim
+                        </InputLabel>
+                        <OutlinedInput
+                            value={claim.toLocaleString()}
+                            name='totalclaim'
+                            onChange={handleChange}
+                            startAdornment={
+                                <InputAdornment position='start'>
+                                    {currencyLabel}
+                                </InputAdornment>
+                            }
+                            label='Amount'
+                        />
+                    </FormControl>
                 </div>
                 <Button
                     color='primary'

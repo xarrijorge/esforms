@@ -15,6 +15,8 @@ export default function BasicDatePicker({
                 disablePast
                 label={label}
                 value={dateValue}
+                inputFormat='MM/dd/yyyy'
+                // defaultValue='January 1, 2022'
                 name='date'
                 onChange={(newValue) => {
                     setDateValue(newValue)

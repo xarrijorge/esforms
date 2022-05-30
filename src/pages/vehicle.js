@@ -238,6 +238,16 @@ const Vehicle = () => {
                         control={<Radio />}
                         label='Other'
                     />
+                    {formData.purpose === 'Other' ? (
+                        <TextField
+                            type='text'
+                            size='small'
+                            label='Please specify'
+                            name='other_specify'
+                            className='textInput'
+                            onChange={handleChange}
+                        />
+                    ) : null}
                 </RadioGroup>
                 <div className='inputdiv'>
                     <TextField

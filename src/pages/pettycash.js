@@ -133,7 +133,7 @@ function PettyCash() {
                         <TextField
                             type='text'
                             size='small'
-                            label='B-Band Number'
+                            label='BBAN Number'
                             name='bbandnumber'
                             className='textInput'
                             onChange={handleBankChange}
