@@ -11,6 +11,10 @@ import {
     Radio,
     RadioGroup,
     FormControlLabel,
+    FormControl,
+    InputLabel,
+    OutlinedInput,
+    InputAdornment,
     FormLabel,
     Button,
     CircularProgress,
@@ -189,6 +193,24 @@ function PettyCash() {
                             key={index}
                         />
                     ))}
+
+                    <span>
+                        <FormControl>
+                            <InputLabel htmlFor='outlined-adornment-amount'>
+                                Total Claim
+                            </InputLabel>
+                            <OutlinedInput
+                                value={0}
+                                name='totalclaim'
+                                startAdornment={
+                                    <InputAdornment position='start'>
+                                        $
+                                    </InputAdornment>
+                                }
+                                label='Amount'
+                            />
+                        </FormControl>
+                    </span>
                     <button
                         disabled={list.length >= 15 ? true : false}
                         className='addButton'
