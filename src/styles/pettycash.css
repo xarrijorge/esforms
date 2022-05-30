@@ -1,3 +1,6 @@
+.pettycashForm{
+padding-bottom: 20px;
+}
 .banksection{
     display:flex;
     flex-wrap: wrap;
@@ -8,6 +11,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+.requestSection footer{
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    margin-left: auto;
 }
 
 .elDiv {
@@ -27,7 +36,7 @@
     padding: 0;
     background-color: transparent;
     border: none;
-    margin-left: 80%;
+    /* margin-left: 80%; */
 }
 
 .addButton:disabled {

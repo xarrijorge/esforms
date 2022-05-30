@@ -22,7 +22,7 @@ import {
 
 function PettyCash() {
     const [itemsData, setitemsData] = React.useState({})
-    const [itemsTotal] = React.useState([])
+    const [itemsTotal, setItemsTotal] = React.useState([])
     const [submitData, setSubmitData] = React.useState({})
     const [list, setList] = React.useState([<Item count={0} />])
     const [bankDetails, setBankDetails] = React.useState({})
@@ -95,6 +95,7 @@ function PettyCash() {
             .forEach((key) => delete itemsData[key])
 
         setSubmitData({ ...bankDetails, items: { ...itemsData } })
+        console.log(itemsTotal)
     }, [itemsData, bankDetails, itemsTotal])
 
     return (
@@ -193,30 +194,31 @@ function PettyCash() {
                             key={index}
                         />
                     ))}
-
-                    <span>
-                        <FormControl>
-                            <InputLabel htmlFor='outlined-adornment-amount'>
-                                Total Claim
-                            </InputLabel>
-                            <OutlinedInput
-                                value={0}
-                                name='totalclaim'
-                                startAdornment={
-                                    <InputAdornment position='start'>
-                                        $
-                                    </InputAdornment>
-                                }
-                                label='Amount'
-                            />
-                        </FormControl>
-                    </span>
-                    <button
-                        disabled={list.length >= 15 ? true : false}
-                        className='addButton'
-                        onClick={updateList}>
-                        <BsFillPlusCircleFill />
-                    </button>
+                    <footer>
+                        <span>
+                            <FormControl>
+                                <InputLabel htmlFor='outlined-adornment-amount'>
+                                    Total Claim
+                                </InputLabel>
+                                <OutlinedInput
+                                    value={0}
+                                    name='totalclaim'
+                                    startAdornment={
+                                        <InputAdornment position='start'>
+                                            $
+                                        </InputAdornment>
+                                    }
+                                    label='Amount'
+                                />
+                            </FormControl>
+                        </span>
+                        <button
+                            disabled={list.length >= 15 ? true : false}
+                            className='addButton'
+                            onClick={updateList}>
+                            <BsFillPlusCircleFill />
+                        </button>
+                    </footer>
                 </section>
                 <span>
                     <TextField
