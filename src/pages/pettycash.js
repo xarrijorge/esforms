@@ -22,12 +22,16 @@ import {
 
 function PettyCash() {
     const [itemsData, setitemsData] = React.useState({})
-    const [itemsTotal, setItemsTotal] = React.useState([])
+    const [itemsTotal, setItemsTotal] = React.useState(100)
     const [submitData, setSubmitData] = React.useState({})
     const [list, setList] = React.useState([<Item count={0} />])
     const [bankDetails, setBankDetails] = React.useState({})
     const [currency, setCurrency] = React.useState('USD')
     const [loading, setLoading] = React.useState(false)
+
+    const TOTAL = React.useMemo(() => [], [])
+
+    let navigate = useNavigate()
 
     const data = JSON.parse(localStorage.getItem('userdata'))
     axios.interceptors.request.use(function (config) {
@@ -48,10 +52,27 @@ function PettyCash() {
     }
 
     let USD_Total = 500
-    // let LRD_Total = 92500
-    // let SLL_Total = 6413630
+    let LRD_Total = 92500
+    let LE_Total = 6413630
 
-    // const checkTotal = () => {}
+    const blockRequest = (thold = LE_Total) => {
+        if (currency === 'USD') {
+            thold = USD_Total
+        } else if (currency === 'LRD') {
+            thold = LRD_Total
+        }
+        alert(
+            `Request exceeds Petty Cash Threshold of ${thold}${currency}! Please make a Purhcase Request Instead`
+        )
+        navigate('/formSelection')
+        return
+    }
+
+    const checkTotal = () => {
+        if (currency === 'LE' && itemsTotal >= LE_Total) blockRequest()
+        if (currency === 'USD' && itemsTotal >= USD_Total) blockRequest()
+        if (currency === 'LRD' && itemsTotal >= LRD_Total) blockRequest()
+    }
 
     const handleBankChange = (e) => {
         setBankDetails({
@@ -64,26 +85,18 @@ function PettyCash() {
     const SUBMIT_URI = 'http://localhost:3001/requests/pettycash'
     const headers = { 'content-type': 'application/json' }
 
-    let navigate = useNavigate()
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(itemsTotal)
-        if (currency === 'USD' && itemsTotal > USD_Total) {
-            alert(
-                `Amount greater than ${USD_Total} USD. Please use a payment request instead`
-            )
-            return navigate('/formseletion')
-        } else {
-            await axios
-                .post(SUBMIT_URI, { ...submitData, user: data }, headers)
-                .then((response) => {
-                    console.log(response)
-                    navigate('/formselection')
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
-        }
+        checkTotal()
+        await axios
+            .post(SUBMIT_URI, { ...submitData, user: data }, headers)
+            .then((response) => {
+                console.log(response)
+                navigate('/formselection')
+            })
+            .catch((err) => {
+                console.log(err)
+            })
 
         console.log({ ...submitData, user: data })
     }
@@ -95,8 +108,17 @@ function PettyCash() {
             .forEach((key) => delete itemsData[key])
 
         setSubmitData({ ...bankDetails, items: { ...itemsData } })
-        console.log(itemsTotal)
-    }, [itemsData, bankDetails, itemsTotal])
+
+        for (let el in itemsData) {
+            let index = parseInt(el)
+            TOTAL[index] = itemsData[el].total
+        }
+        setItemsTotal(
+            TOTAL.reduce((x, y) => {
+                return x + y
+            }, 0)
+        )
+    }, [itemsData, bankDetails, TOTAL])
 
     return (
         <div className='pettycashForm'>
@@ -161,8 +183,6 @@ function PettyCash() {
                         </FormLabel>
                         <RadioGroup
                             aria-labelledby='purpose-group-label'
-                            defaultValue='USD'
-                            required
                             row
                             onChange={(e) => setCurrency(e.target.value)}
                             name='currency'>
@@ -172,9 +192,9 @@ function PettyCash() {
                                 label='USD'
                             />
                             <FormControlLabel
-                                value='SLL'
-                                control={<Radio />}
-                                label='SLL'
+                                value='LE'
+                                control={<Radio required />}
+                                label='LE'
                             />
                             <FormControlLabel
                                 value='LRD'
@@ -201,11 +221,11 @@ function PettyCash() {
                                     Total Claim
                                 </InputLabel>
                                 <OutlinedInput
-                                    value={0}
+                                    value={itemsTotal}
                                     name='totalclaim'
                                     startAdornment={
                                         <InputAdornment position='start'>
-                                            $
+                                            {currency}
                                         </InputAdornment>
                                     }
                                     label='Amount'
