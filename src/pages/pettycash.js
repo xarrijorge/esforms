@@ -87,8 +87,8 @@ function PettyCash() {
         })
         setBudgetCode([...budgetCodes[itemsData.department]])
     }
-    // const SUBMIT_URI = 'https://esformsbackend.herokuapp.com/requests/pettycash'
-    const SUBMIT_URI = 'http://localhost:3001/requests/pettycash'
+    const SUBMIT_URI = 'https://esformsbackend.herokuapp.com/requests/pettycash'
+    // const SUBMIT_URI = 'http://localhost:3001/requests/pettycash'
     const headers = { 'content-type': 'application/json' }
 
     const handleSubmit = async (e) => {
