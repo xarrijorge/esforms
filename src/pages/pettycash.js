@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import Greeting from '../components/greeting'
 import Item from '../components/Item'
+import budgetCodes, { departments } from '../components/budgetCodes'
 import { useNavigate } from 'react-router-dom'
 import '../styles/pettycash.css'
 
@@ -18,6 +19,8 @@ import {
     FormLabel,
     Button,
     CircularProgress,
+    Select,
+    MenuItem,
 } from '@mui/material'
 
 function PettyCash() {
@@ -28,6 +31,8 @@ function PettyCash() {
     const [bankDetails, setBankDetails] = React.useState({})
     const [currency, setCurrency] = React.useState('USD')
     const [loading, setLoading] = React.useState(false)
+    const [budgetCode, setBudgetCode] = React.useState([])
+    const [department, setDepartment] = React.useState('PC')
 
     const TOTAL = React.useMemo(() => [], [])
 
@@ -80,6 +85,7 @@ function PettyCash() {
             [e.target.name]: e.target.value,
             currency: currency,
         })
+        setBudgetCode([...budgetCodes[itemsData.department]])
     }
     // const SUBMIT_URI = 'https://esformsbackend.herokuapp.com/requests/pettycash'
     const SUBMIT_URI = 'http://localhost:3001/requests/pettycash'
@@ -124,6 +130,81 @@ function PettyCash() {
         <div className='pettycashForm'>
             <Greeting user={data['First Name']} />
             <form onSubmit={handleSubmit}>
+                <header className='pcHeader'>
+                    <FormControl sx={{ m: 1, minWidth: 200 }} size='small'>
+                        <InputLabel id='demo-simple-select-label'>
+                            Department?
+                        </InputLabel>
+                        <Select
+                            labelId='demo-simple-select-label'
+                            id='demo-simple-select'
+                            value={department}
+                            placeholder='Select One'
+                            label='Type of Vehicle'
+                            name='deparment'
+                            required
+                            onChange={(e) => setDepartment(e.target.value)}>
+                            {departments.map((el) => {
+                                return (
+                                    <MenuItem required value={el}>
+                                        {el}
+                                    </MenuItem>
+                                )
+                            })}
+                        </Select>
+                    </FormControl>
+
+                    <FormControl sx={{ m: 1, minWidth: 200 }} size='small'>
+                        <InputLabel id='demo-simple-select-label'>
+                            Budget Code?
+                        </InputLabel>
+                        <Select
+                            labelId='demo-simple-select-label'
+                            id='demo-simple-select'
+                            value={budgetCode}
+                            placeholder='Select One'
+                            label='Type of Vehicle'
+                            name='budgetcode'
+                            required
+                            onChange={(e) => setBudgetCode(e.target.value)}>
+                            {budgetCodes[department].map((el) => {
+                                return (
+                                    <MenuItem required value={el}>
+                                        {el}
+                                    </MenuItem>
+                                )
+                            })}
+                        </Select>
+                    </FormControl>
+
+                    <div>
+                        <FormLabel id='purpose-group-label'>
+                            Please Select Your Currency
+                        </FormLabel>
+                        <RadioGroup
+                            aria-labelledby='purpose-group-label'
+                            row
+                            onChange={(e) => setCurrency(e.target.value)}
+                            name='currency'>
+                            <FormControlLabel
+                                value='USD'
+                                control={<Radio />}
+                                label='USD'
+                            />
+                            <FormControlLabel
+                                value='LE'
+                                control={<Radio required />}
+                                label='LE'
+                            />
+                            <FormControlLabel
+                                value='LRD'
+                                control={<Radio />}
+                                label='LRD'
+                            />
+                        </RadioGroup>
+                    </div>
+                </header>
+
                 <h3>Bank Details Section</h3>
                 <section className='banksection'>
                     <span>
@@ -166,44 +247,10 @@ function PettyCash() {
                             onChange={handleBankChange}
                         />
                     </span>
-                    <span>
-                        <TextField
-                            type='text'
-                            size='small'
-                            label='Budget Code'
-                            name='budgetcode'
-                            className='textInput'
-                            onChange={handleBankChange}
-                        />
-                    </span>
+
                     {/* currency selection section */}
-                    <div>
-                        <FormLabel id='purpose-group-label'>
-                            Please Select Your Currency
-                        </FormLabel>
-                        <RadioGroup
-                            aria-labelledby='purpose-group-label'
-                            row
-                            onChange={(e) => setCurrency(e.target.value)}
-                            name='currency'>
-                            <FormControlLabel
-                                value='USD'
-                                control={<Radio />}
-                                label='USD'
-                            />
-                            <FormControlLabel
-                                value='LE'
-                                control={<Radio required />}
-                                label='LE'
-                            />
-                            <FormControlLabel
-                                value='LRD'
-                                control={<Radio />}
-                                label='LRD'
-                            />
-                        </RadioGroup>
-                    </div>
                 </section>
+                {/* budget code / Department selection section  */}
                 <section className='requestSection'>
                     <h3>Request Section</h3>
                     {list.map((item, index) => (
