@@ -29,7 +29,7 @@ function PettyCash() {
     const [currency, setCurrency] = React.useState('USD')
     const [loading, setLoading] = React.useState(false)
 
-    const TOTAL = []
+    const TOTAL = React.useMemo(() => [], [])
 
     let navigate = useNavigate()
 
