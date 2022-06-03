@@ -130,7 +130,7 @@ function PettyCash() {
         <div className='pettycashForm'>
             <Greeting user={data['First Name']} />
             <form onSubmit={handleSubmit}>
-                <header className='pcHeader'>
+                <header className='pcheader'>
                     <FormControl sx={{ m: 1, minWidth: 200 }} size='small'>
                         <InputLabel id='demo-simple-select-label'>
                             Department?
@@ -177,7 +177,7 @@ function PettyCash() {
                         </Select>
                     </FormControl>
 
-                    <div>
+                    <div className='currencybox'>
                         <FormLabel id='purpose-group-label'>
                             Please Select Your Currency
                         </FormLabel>
@@ -265,10 +265,10 @@ function PettyCash() {
                         <span>
                             <FormControl>
                                 <InputLabel htmlFor='outlined-adornment-amount'>
-                                    Total Claim
+                                    Request Total
                                 </InputLabel>
                                 <OutlinedInput
-                                    value={itemsTotal}
+                                    value={itemsTotal.toLocaleString()}
                                     name='totalclaim'
                                     startAdornment={
                                         <InputAdornment position='start'>

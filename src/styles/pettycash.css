@@ -62,4 +62,12 @@ padding-bottom: 20px;
     background-color: #1565C0;
     color: #fff;
 }
+.pcheader{
+    display: flex;
+    align-items: center;
+}
+.pcheader .currencybox{
+    margin-left: 20px ;
+    text-align: center;
+}
 /* ////// Home Page styles ///////// */

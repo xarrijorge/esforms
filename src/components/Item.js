@@ -76,7 +76,7 @@ const Item = ({ count, data, setData, itemsTotal }) => {
                 type='number'
                 className='textInput'
                 size='small'
-                label='Amount'
+                label='Quantity'
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 name={`amount${count}`}
