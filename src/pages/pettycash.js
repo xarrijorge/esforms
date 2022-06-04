@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import '../styles/pettycash.css'
 
 import { BsFillPlusCircleFill } from 'react-icons/bs'
+import { FiMinusCircle } from 'react-icons/fi'
 import {
     TextField,
     Radio,
@@ -46,9 +47,14 @@ function PettyCash() {
         return response
     })
 
-    const updateList = (e) => {
+    const addOneToList = (e) => {
         e.preventDefault()
         setList([...list, <Item />])
+    }
+    const removeLastItem = (e) => {
+        e.preventDefault()
+        let newList = [...list.pop()]
+        setList([...newList])
     }
 
     let USD_Total = 500
@@ -234,9 +240,15 @@ function PettyCash() {
                         </span>
                         <button
                             disabled={list.length >= 15 ? true : false}
-                            className='addButton'
-                            onClick={updateList}>
+                            className='actionButton addButton'
+                            onClick={addOneToList}>
                             <BsFillPlusCircleFill />
+                        </button>
+                        <button
+                            disabled={list.length < 2 ? true : false}
+                            className='actionButton removeButton'
+                            onClick={removeLastItem}>
+                            <FiMinusCircle />
                         </button>
                     </footer>
                 </section>

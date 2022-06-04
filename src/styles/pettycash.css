@@ -1,8 +1,8 @@
-.pettycashForm{
-padding-bottom: 20px;
+.pettycashForm {
+    padding-bottom: 20px;
 }
-.banksection{
-    display:flex;
+.banksection {
+    display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
@@ -12,7 +12,7 @@ padding-bottom: 20px;
     justify-content: center;
     align-items: center;
 }
-.requestSection footer{
+.requestSection footer {
     display: flex;
     align-items: center;
     margin-top: 20px;
@@ -28,18 +28,70 @@ padding-bottom: 20px;
     flex-wrap: wrap;
 }
 
-.addButton {
+.actionButton {
     font-size: 2em;
     cursor: pointer;
-    color: #1565C0;
-    margin: 20px;
+    margin: 10px;
     padding: 0;
     background-color: transparent;
     border: none;
-    /* margin-left: 80%; */
 }
 
-.addButton:disabled {
+.addButton {
+    color: #1565c0;
+    position: relative;
+}
+.addButton:after,
+.removeButton::after {
+    content: 'Add item to form';
+    font-size: 14px;
+    color: #141414;
+    position: absolute;
+    border: 1px solid #1565c0;
+    border-radius: 5px;
+    padding: 5px;
+    width: max-content;
+    text-align: left;
+    top: 90%;
+    left: -20px;
+    visibility: hidden;
+}
+.addButton:before,
+.removeButton::before {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    position: absolute;
+
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid #1565c0;
+    top: 60%;
+    transform: rotate(90deg);
+    left: 15px;
+    visibility: hidden;
+}
+.addButton:hover::after,
+.addButton:hover::before,
+.removeButton:hover::after,
+.removeButton:hover::before {
+    visibility: visible;
+}
+.removeButton {
+    color: red;
+    position: relative;
+}
+.removeButton::after{
+    content: 'Remove last item';
+    border-color: red;
+}
+.removeButton::before{
+    border-right-color: red;
+}
+
+.addButton:disabled,
+.removeButton:disabled {
     color: gray;
     cursor: not-allowed;
 }
@@ -58,8 +110,8 @@ padding-bottom: 20px;
     /* text-align: justify; */
     width: 300px;
 }
-.pettycashForm .submitButton:hover{
-    background-color: #1565C0;
+.pettycashForm .submitButton:hover {
+    background-color: #1565c0;
     color: #fff;
 }
 /* ////// Home Page styles ///////// */
