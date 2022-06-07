@@ -257,7 +257,6 @@ const Vehicle = () => {
                         InputProps={{
                             readOnly: false,
                             min: 0,
-                            max: 10,
                         }}
                         variant='outlined'
                         onChange={handleChange}

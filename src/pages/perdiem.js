@@ -130,7 +130,6 @@ const PerDiem = () => {
                             InputProps={{
                                 readOnly: false,
                                 min: 1,
-                                max: 30,
                             }}
                             variant='outlined'
                             onChange={handleChange}
@@ -168,35 +167,12 @@ const PerDiem = () => {
                                 InputProps={{
                                     readOnly: false,
                                     min: 0,
-                                    max: 30,
                                 }}
                                 variant='outlined'
                                 onChange={handleChange}
                             />
                         </div>
                     ) : null}
-                    {/* <div className='inputdiv radioset'>
-                        <FormLabel id='demo-radio-buttons-group-label'>
-                            Meals
-                        </FormLabel>
-                        <RadioGroup
-                            aria-labelledby='meals-group-label'
-                            defaultValue='No'
-                            row
-                            onChange={handleChange}
-                            name='meals'>
-                            <FormControlLabel
-                                value='Yes'
-                                control={<Radio />}
-                                label='Yes'
-                            />
-                            <FormControlLabel
-                                value='No'
-                                control={<Radio />}
-                                label='No'
-                            />
-                        </RadioGroup>
-                    </div> */}
                 </div>
                 <FormLabel id='purpose-group-label'>
                     What is the Purpose of your trip?
