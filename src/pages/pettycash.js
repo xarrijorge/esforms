@@ -84,11 +84,13 @@ function PettyCash() {
             ...bankDetails,
             [e.target.name]: e.target.value,
             currency: currency,
+            department: department,
+            budgetcode: budgetCode,
         })
         setBudgetCode([...budgetCodes[itemsData.department]])
     }
-    const SUBMIT_URI = 'https://esformsbackend.herokuapp.com/requests/pettycash'
-    // const SUBMIT_URI = 'http://localhost:3001/requests/pettycash'
+    // const SUBMIT_URI = 'https://esformsbackend.herokuapp.com/requests/pettycash'
+    const SUBMIT_URI = 'http://localhost:3001/requests/pettycash'
     const headers = { 'content-type': 'application/json' }
 
     const handleSubmit = async (e) => {
