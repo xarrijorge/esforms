@@ -56,11 +56,11 @@ function PettyCash() {
         e.preventDefault()
         setList([...list, <Item />])
     }
-    const removeLastItem = (e) => {
-        e.preventDefault()
-        let newList = [...list.pop()]
-        setList([...newList])
-    }
+    // const removeLastItem = (e) => {
+    //     e.preventDefault()
+    //     let newList = [...list.pop()]
+    //     setList([...newList])
+    // }
 
     let USD_Total = 500
     let LRD_Total = 92500
@@ -293,12 +293,12 @@ function PettyCash() {
                             onClick={addOneToList}>
                             <BsFillPlusCircleFill />
                         </button>
-                        <button
+                        {/* <button
                             disabled={list.length < 2 ? true : false}
                             className='actionButton removeButton'
                             onClick={removeLastItem}>
                             <FiMinusCircle />
-                        </button>
+                        </button> */}
                     </footer>
                 </section>
                 <span>

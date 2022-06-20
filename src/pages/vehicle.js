@@ -21,7 +21,7 @@ import BasicDatePicker from '../components/BasicDatePicker'
 
 const Vehicle = () => {
     const [formData, setFormData] = React.useState({})
-    const [departureDate, setDeparture] = React.useState(null)
+    const [departureDate, setDeparture] = React.useState(new Date())
     const [returnDate, setReturn] = React.useState(null)
     const data = JSON.parse(localStorage.getItem('userdata'))
     const [loading, setLoading] = React.useState(false)
@@ -48,8 +48,8 @@ const Vehicle = () => {
         return response
     })
 
-    const API_URI = 'https://esformsbackend.herokuapp.com/requests/vehicle'
-    // const API_URI = 'http://localhost:3001/requests/vehicle'
+    // const API_URI = 'https://esformsbackend.herokuapp.com/requests/vehicle'
+    const API_URI = 'http://localhost:3001/requests/vehicle'
     const headers = { 'content-type': 'application/json' }
 
     const navigate = useNavigate()
@@ -129,7 +129,6 @@ const Vehicle = () => {
                         <TextField
                             label='Destination'
                             name='destination'
-                            required
                             InputProps={{
                                 readOnly: false,
                             }}
@@ -188,6 +187,7 @@ const Vehicle = () => {
                             label='Type of Vehicle'
                             name='vehicle'
                             required
+                            defaultValue='any'
                             onChange={handleChange}>
                             <MenuItem required value='4x4'>
                                 4x4 Land Cruiser
