@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom'
 import '../styles/pettycash.css'
 
 import { BsFillPlusCircleFill } from 'react-icons/bs'
-import { FiMinusCircle } from 'react-icons/fi'
 import {
     TextField,
     Radio,
