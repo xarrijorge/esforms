@@ -26,7 +26,6 @@ export const FormSelection = () => {
         return (
             <div className='formPage'>
                 <h2>
-                    {' '}
                     Hello, {user}. Which Request do you want to make today?
                 </h2>
                 <div className='cardBox'>

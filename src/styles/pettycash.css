@@ -1,125 +1,129 @@
 .pettycashForm {
-    padding-bottom: 20px;
+  padding-bottom: 20px;
 }
 .banksection {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .requestSection {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .requestSection footer {
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
-    margin-left: auto;
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  margin-left: auto;
 }
-
 .elDiv {
-    border-bottom: 1px solid lightgrey;
-    height: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
+  border-bottom: 1px solid lightgrey;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }
-
 .actionButton {
-    font-size: 2em;
-    cursor: pointer;
-    margin: 10px;
-    padding: 0;
-    background-color: transparent;
-    border: none;
+  font-size: 2em;
+  cursor: pointer;
+  margin: 10px;
+  padding: 0;
+  background-color: transparent;
+  border: none;
 }
-
 .addButton {
-    color: #1565c0;
-    position: relative;
+  color: #1565c0;
+  position: relative;
 }
 .addButton:after,
 .removeButton::after {
-    content: 'Add item to form';
-    font-size: 14px;
-    color: #141414;
-    position: absolute;
-    border: 1px solid #1565c0;
-    border-radius: 5px;
-    padding: 5px;
-    width: max-content;
-    text-align: left;
-    top: 90%;
-    left: -20px;
-    visibility: hidden;
+  content: "Add item to form";
+  font-size: 14px;
+  color: #141414;
+  position: absolute;
+  border: 1px solid #1565c0;
+  border-radius: 5px;
+  padding: 5px;
+  width: max-content;
+  text-align: left;
+  top: 90%;
+  left: -20px;
+  visibility: hidden;
 }
 .addButton:before,
 .removeButton::before {
-    content: '';
-    display: block;
-    width: 0;
-    height: 0;
-    position: absolute;
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  position: absolute;
 
-    border-top: 8px solid transparent;
-    border-bottom: 8px solid transparent;
-    border-right: 8px solid #1565c0;
-    top: 60%;
-    transform: rotate(90deg);
-    left: 15px;
-    visibility: hidden;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 8px solid #1565c0;
+  top: 60%;
+  transform: rotate(90deg);
+  left: 15px;
+  visibility: hidden;
 }
 .addButton:hover::after,
 .addButton:hover::before,
 .removeButton:hover::after,
 .removeButton:hover::before {
-    visibility: visible;
+  visibility: visible;
 }
 .removeButton {
-    color: red;
-    position: relative;
+  color: red;
+  position: relative;
 }
-.removeButton::after{
-    content: 'Remove last item';
-    border-color: red;
+.removeButton::after {
+  content: "Remove last item";
+  border-color: red;
 }
-.removeButton::before{
-    border-right-color: red;
+.removeButton::before {
+  border-right-color: red;
 }
-
 .addButton:disabled,
 .removeButton:disabled {
-    color: gray;
-    cursor: not-allowed;
+  color: gray;
+  cursor: not-allowed;
 }
-
-.pettycashForm input[type='number'] {
-    min-width: 50px;
-    max-width: 100px;
-    /* min-width: max-content; */
+.pettycashForm input[type="number"] {
+  min-width: 50px;
+  max-width: 100px;
+  /* min-width: max-content; */
 }
-
 .textInput {
-    margin: 10px !important;
+  margin: 10px !important;
 }
-
 .pettycashForm .submitButton {
-    /* text-align: justify; */
-    width: 300px;
+  /* text-align: justify; */
+  width: 300px;
 }
 .pettycashForm .submitButton:hover {
-    background-color: #1565c0;
-    color: #fff;
+  background-color: #1565c0;
+  color: #fff;
 }
-.pcheader{
-    display: flex;
-    align-items: center;
+.pcheader {
+  display: flex;
+  align-items: center;
 }
-.pcheader .currencybox{
-    margin-left: 20px ;
-    text-align: center;
+.pcheader .currencybox {
+  margin-left: 20px;
+  text-align: center;
 }
 /* ////// Home Page styles ///////// */
+.fileupload {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: space-around;
+  text-align: center;
+  cursor: pointer;
+}
+.fileupload *{
+    margin: 0;
+}

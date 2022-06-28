@@ -56,6 +56,7 @@ const PerDiem = () => {
             ...formData,
             [e.target.name]: e.target.value.trim(),
             date: dateValue.toDateString() || '',
+            currency: currencyLabel
         })
         console.log(formData)
     }
@@ -71,8 +72,8 @@ const PerDiem = () => {
         return response
     })
 
-    const API_URI = 'https://esformsbackend.herokuapp.com/requests/perdiem'
-    // const API_URI = 'http://localhost:3001/requests/perdiem'
+    // const API_URI = 'https://esformsbackend.herokuapp.com/requests/perdiem'
+    const API_URI = 'http://localhost:3001/requests/perdiem'
     const headers = { 'content-type': 'application/json' }
 
     const navigate = useNavigate()
@@ -86,6 +87,7 @@ const PerDiem = () => {
             .post(API_URI, { ...formData, user: data }, headers)
             .then((response) => {
                 console.log(formData)
+                window.confirm('Your Request was successful. You Line Manager will receive the details')
                 navigate('/formselection')
             })
             .catch((err) => {
@@ -184,7 +186,7 @@ const PerDiem = () => {
                     onChange={handleChange}
                     name='purpose'>
                     <FormControlLabel
-                        value='FSVisit'
+                        value='Field Site Visit'
                         control={<Radio />}
                         label='Field/Site Visit'
                     />
