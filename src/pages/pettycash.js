@@ -35,7 +35,6 @@ function PettyCash() {
   const [budgetCode, setBudgetCode] = React.useState(['select option']);
   const [department, setDepartment] = React.useState('Select Department');
   const [invoiceDoc, setInvoice] = React.useState('');
-  const [invoiceLink, setInvoiceLink] = React.useState('');
 
   const TOTAL = React.useMemo(() => [], []);
   const currencyLabel = window.location.href.includes('lib') ? 'LRD' : 'LE';
@@ -100,12 +99,12 @@ function PettyCash() {
   };
   const SUBMIT_URI = 'https://esformsbackend.herokuapp.com/requests/pettycash';
   // const UPLOAD_URI= 'https://esformsbackend.herokuapp.com/requests/upload';
- //  const SUBMIT_URI = 'http://localhost:3001/requests/pettycash';
+  //  const SUBMIT_URI = 'http://localhost:3001/requests/pettycash';
   // const UPLOAD_URI = 'http://localhost:3001/requests/upload';
   // const serverURL = 'http://localhost:3001';
   const config = {
     headers: {
-      'content-type': 'application/x-www-form-urlencoded'
+      'content-type': 'application/x-www-form-urlencoded',
     },
   };
   const handleSubmit = async (e) => {
@@ -119,7 +118,7 @@ function PettyCash() {
     await axios
       .post(SUBMIT_URI, formData, config)
       .then((response) => {
-    console.log(formData.get('details'));
+        console.log(formData.get('details'));
         window.confirm('Your request has been submitted!');
         navigate('/formselection');
       })
@@ -137,7 +136,6 @@ function PettyCash() {
     setSubmitData({
       ...bankDetails,
       items: { ...itemsData },
-      invoices: invoiceLink,
     });
 
     for (let el in itemsData) {
@@ -149,7 +147,7 @@ function PettyCash() {
         return x + y;
       }, 0)
     );
-  }, [itemsData, bankDetails, TOTAL, invoiceDoc, invoiceLink]);
+  }, [itemsData, bankDetails, TOTAL, invoiceDoc]);
 
   return (
     <div className='pettycashForm'>
@@ -363,11 +361,6 @@ function PettyCash() {
               onChange={(e) => {
                 console.log(e.target.files);
                 setInvoice(e.target.files[0]);
-                setInvoiceLink(
-                  `${serverURL}/${Date.now()}--${e.target.files[0].name
-                    .replace(/\s/g, '')
-                    .toLowerCase()}`
-                );
               }}
             />
           </label>
