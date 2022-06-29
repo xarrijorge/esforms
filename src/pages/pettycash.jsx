@@ -1,11 +1,15 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable radix */
+/* eslint-disable guard-for-in */
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-alert */
+/* eslint-disable camelcase */
+/* eslint-disable no-console */
 import React from 'react';
 import axios from 'axios';
-import Greeting from '../components/greeting';
-import Item from '../components/Item';
-import budgetCodes, { departments } from '../components/budgetCodes';
 import { useNavigate } from 'react-router-dom';
 import '../styles/pettycash.css';
-
 import { BsFillPlusCircleFill, BsCloudCheckFill } from 'react-icons/bs';
 import { MdCloudUpload } from 'react-icons/md';
 import {
@@ -23,6 +27,9 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
+import Greeting from '../components/greeting';
+import Item from '../components/Item';
+import budgetCodes, { departments } from '../components/budgetCodes';
 
 function PettyCash() {
   const [itemsData, setitemsData] = React.useState({});
@@ -39,7 +46,7 @@ function PettyCash() {
   const TOTAL = React.useMemo(() => [], []);
   const currencyLabel = window.location.href.includes('lib') ? 'LRD' : 'LE';
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const data = JSON.parse(localStorage.getItem('userdata'));
   // axios.interceptors.request.use(function (config) {
@@ -64,9 +71,9 @@ function PettyCash() {
   //     setList([...newList])
   // }
 
-  let USD_Total = 500;
-  let LRD_Total = 92500;
-  let LE_Total = 6413630;
+  const USD_Total = 500;
+  const LRD_Total = 92500;
+  const LE_Total = 6413630;
 
   const blockRequest = (thold = LE_Total) => {
     if (currency === 'USD') {
@@ -74,11 +81,10 @@ function PettyCash() {
     } else if (currency === 'LRD') {
       thold = LRD_Total;
     }
-    alert(
-      `Request exceeds Petty Cash Threshold of ${thold}${currency}! Please make a Purhcase Request Instead`
+    window.alert(
+      `Request exceeds Petty Cash Threshold of ${thold}${currency}! Please make a Purhcase Request Instead`,
     );
     navigate('/formSelection');
-    return;
   };
 
   const checkTotal = () => {
@@ -91,8 +97,8 @@ function PettyCash() {
     setBankDetails({
       ...bankDetails,
       [e.target.name]: e.target.value,
-      currency: currency,
-      department: department,
+      currency,
+      department,
       budgetcode: budgetCode,
     });
     setBudgetCode([...budgetCodes[itemsData.department]]);
@@ -118,10 +124,11 @@ function PettyCash() {
 
     await axios
       .post(SUBMIT_URI, formData, config)
+      // eslint-disable-next-line no-unused-vars
       .then((response) => {
-        console.log(formData.get('details'));
+        // eslint-disable-next-line no-alert
         window.confirm(
-          'Your Request was successful. You Line Manager will receive the details'
+          'Your Request was successful. You Line Manager will receive the details',
         );
         setLoading(false);
         navigate('/formselection');
@@ -142,77 +149,71 @@ function PettyCash() {
       items: { ...itemsData },
     });
 
-    for (let el in itemsData) {
-      let index = parseInt(el);
+    for (const el in itemsData) {
+      const index = parseInt(el);
       TOTAL[index] = itemsData[el].total;
     }
     setItemsTotal(
-      TOTAL.reduce((x, y) => {
-        return x + y;
-      }, 0)
+      TOTAL.reduce((x, y) => x + y, 0),
     );
   }, [itemsData, bankDetails, TOTAL, invoiceDoc]);
 
   return (
-    <div className='pettycashForm'>
+    <div className="pettycashForm">
       <Greeting user={data['First Name']} />
       <form onSubmit={handleSubmit}>
-        <header className='pcheader'>
-          <FormControl sx={{ m: 1, minWidth: 200 }} size='small'>
-            <InputLabel id='demo-simple-select-label'>Department?</InputLabel>
+        <header className="pcheader">
+          <FormControl sx={{ m: 1, minWidth: 200 }} size="small">
+            <InputLabel id="demo-simple-select-label">Department?</InputLabel>
             <Select
-              labelId='demo-simple-select-label'
-              id='demo-simple-select'
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
               value={department}
-              placeholder='Select One'
-              label='Type of Vehicle'
-              name='deparment'
+              placeholder="Select One"
+              label="Type of Vehicle"
+              name="deparment"
               required
               onChange={(e) => setDepartment(e.target.value)}
             >
-              {departments.map((el, i) => {
-                return (
-                  <MenuItem required key={i} value={el}>
-                    {el}
-                  </MenuItem>
-                );
-              })}
+              {departments.map((el, i) => (
+                <MenuItem required key={i} value={el}>
+                  {el}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
 
-          <FormControl sx={{ m: 1, minWidth: 200 }} size='small'>
-            <InputLabel id='demo-simple-select-label'>Budget Code?</InputLabel>
+          <FormControl sx={{ m: 1, minWidth: 200 }} size="small">
+            <InputLabel id="demo-simple-select-label">Budget Code?</InputLabel>
             <Select
-              labelId='demo-simple-select-label'
-              id='demo-simple-select'
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
               value={budgetCode}
-              placeholder='Select One'
-              label='Type of Vehicle'
-              name='budgetcode'
+              placeholder="Select One"
+              label="Type of Vehicle"
+              name="budgetcode"
               required
               onChange={(e) => setBudgetCode(e.target.value)}
             >
-              {budgetCodes[department].map((el, i) => {
-                return (
-                  <MenuItem required key={i} value={el} defaultValue={el[0]}>
-                    {el}
-                  </MenuItem>
-                );
-              })}
+              {budgetCodes[department].map((el, i) => (
+                <MenuItem required key={i} value={el} defaultValue={el[0]}>
+                  {el}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
 
-          <div className='currencybox'>
-            <FormLabel id='purpose-group-label'>
+          <div className="currencybox">
+            <FormLabel id="purpose-group-label">
               Please Select Your Currency
             </FormLabel>
             <RadioGroup
-              aria-labelledby='purpose-group-label'
+              aria-labelledby="purpose-group-label"
               row
               onChange={(e) => setCurrency(e.target.value)}
-              name='currency'
+              name="currency"
             >
-              <FormControlLabel value='USD' control={<Radio />} label='USD' />
+              <FormControlLabel value="USD" control={<Radio />} label="USD" />
 
               <FormControlLabel
                 value={currencyLabel}
@@ -224,81 +225,81 @@ function PettyCash() {
         </header>
 
         <h3>Bank Details Section</h3>
-        <div className='inputdiv radioset'>
-          <FormLabel id='accommodation-group-label'>
+        <div className="inputdiv radioset">
+          <FormLabel id="accommodation-group-label">
             How do you want to receive payment?
           </FormLabel>
           <RadioGroup
-            aria-labelledby='accommodation-group-label'
+            aria-labelledby="accommodation-group-label"
             row
             onChange={handleBankChange}
-            name='paymentmethod'
+            name="paymentmethod"
           >
             <FormControlLabel
-              value='Bank'
+              value="Bank"
               control={<Radio />}
-              label='Bank Account'
+              label="Bank Account"
             />
             <FormControlLabel
-              value='MoMo'
+              value="MoMo"
               control={<Radio />}
-              label='Mobile Money'
+              label="Mobile Money"
             />
           </RadioGroup>
         </div>
-        <section className='banksection'>
-          {bankDetails['paymentmethod'] === 'Bank' ? (
+        <section className="banksection">
+          {bankDetails.paymentmethod === 'Bank' ? (
             <>
               <span>
                 <TextField
-                  type='text'
-                  size='small'
-                  label='Bank Name'
-                  name='bankname'
-                  className='textInput'
+                  type="text"
+                  size="small"
+                  label="Bank Name"
+                  name="bankname"
+                  className="textInput"
                   onChange={handleBankChange}
                 />
               </span>
               <span>
                 <TextField
-                  type='text'
-                  size='small'
-                  label='Bank Account Name'
-                  name='accountname'
-                  className='textInput'
+                  type="text"
+                  size="small"
+                  label="Bank Account Name"
+                  name="accountname"
+                  className="textInput"
                   onChange={handleBankChange}
                 />
               </span>
               <span>
                 <TextField
-                  type='text'
-                  size='small'
-                  label='Bank Account Number'
-                  name='accountnumber'
-                  className='textInput'
+                  type="text"
+                  size="small"
+                  label="Bank Account Number"
+                  name="accountnumber"
+                  className="textInput"
                   onChange={handleBankChange}
                 />
               </span>
               <span>
                 <TextField
-                  type='text'
-                  size='small'
-                  label='BBAN Number'
-                  name='bbandnumber'
-                  className='textInput'
+                  type="text"
+                  size="small"
+                  label="BBAN Number"
+                  name="bbandnumber"
+                  className="textInput"
                   onChange={handleBankChange}
                 />
               </span>
             </>
           ) : null}
-          {bankDetails['paymentmethod'] === 'MoMo' ? (
+          {bankDetails.paymentmethod === 'MoMo' ? (
             <span>
               <TextField
-                type='text'
-                size='small'
-                label='Mobile Money Number'
-                name='momonumber'
-                className='textInput'
+                type="text"
+                size="small"
+                label="Mobile Money Number"
+                name="momonumber"
+                className="textInput"
                 onChange={handleBankChange}
               />
             </span>
@@ -307,7 +308,7 @@ function PettyCash() {
 
         {/* currency selection section */}
         {/* budget code / Department selection section  */}
-        <section className='requestSection'>
+        <section className="requestSection">
           <h3>Request Section</h3>
           {list.map((item, index) => (
             <Item
@@ -320,22 +321,23 @@ function PettyCash() {
           <footer>
             <span>
               <FormControl>
-                <InputLabel htmlFor='outlined-adornment-amount'>
+                <InputLabel htmlFor="outlined-adornment-amount">
                   Request Total
                 </InputLabel>
                 <OutlinedInput
                   value={itemsTotal.toLocaleString()}
-                  name='totalclaim'
+                  name="totalclaim"
                   startAdornment={
-                    <InputAdornment position='start'>{currency}</InputAdornment>
+                    <InputAdornment position="start">{currency}</InputAdornment>
                   }
-                  label='Amount'
+                  label="Amount"
                 />
               </FormControl>
             </span>
             <button
-              disabled={list.length >= 15 ? true : false}
-              className='actionButton addButton'
+              type="button"
+              disabled={list.length >= 15}
+              className="actionButton addButton"
               onClick={addOneToList}
             >
               <BsFillPlusCircleFill />
@@ -349,21 +351,21 @@ function PettyCash() {
           </footer>
         </section>
         <div>
-          <label htmlFor='invoices' className='fileupload'>
-            <p>{invoiceDoc.name || 'UPLOAD INVOICE'}</p>{' '}
+          <label htmlFor="invoices" className="fileupload">
+            <p>{invoiceDoc.name || 'UPLOAD INVOICE'}</p>
+            {' '}
             {invoiceDoc === '' ? (
               <MdCloudUpload size={40} />
             ) : (
               <BsCloudCheckFill size={40} />
             )}
             <input
-              type='file'
+              type="file"
               hidden
               // size='small'
-              name='invoices'
-              id='invoices'
+              name="invoices"
+              id="invoices"
               onChange={(e) => {
-                console.log(e.target.files);
                 setInvoice(e.target.files[0]);
               }}
             />
@@ -371,13 +373,13 @@ function PettyCash() {
         </div>
 
         <Button
-          color='primary'
-          variant='outlined'
-          type='submit'
-          size='large'
-          className='submitButton'
+          color="primary"
+          variant="outlined"
+          type="submit"
+          size="large"
+          className="submitButton"
         >
-          {loading ? <CircularProgress color='inherit' /> : 'submit'}
+          {loading ? <CircularProgress color="inherit" /> : 'submit'}
         </Button>
       </form>
     </div>

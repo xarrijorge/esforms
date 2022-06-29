@@ -1,7 +1,15 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable radix */
+/* eslint-disable guard-for-in */
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-alert */
+/* eslint-disable camelcase */
+/* eslint-disable no-console */
 import React from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Greeting from '../components/greeting';
 import '../styles/perdiem.css';
 import {
   TextField,
@@ -17,9 +25,10 @@ import {
   InputAdornment,
 } from '@mui/material';
 
+import Greeting from '../components/greeting';
 import BasicDatePicker from '../components/BasicDatePicker';
 
-const PerDiem = () => {
+function PerDiem() {
   const [formData, setFormData] = React.useState({});
   const [dateValue, setDateValue] = React.useState(new Date());
   const data = JSON.parse(localStorage.getItem('userdata'));
@@ -29,8 +38,7 @@ const PerDiem = () => {
   const currencyLabel = window.location.href.includes('lib') ? 'LRD' : 'LE';
 
   const calculateClaim = React.useCallback(() => {
-    let nights =
-      formData.accommodation !== 'No' ? parseInt(formData.nights) : 0;
+    let nights = formData.accommodation !== 'No' ? parseInt(formData.nights) : 0;
     let days = parseInt(formData.days) || 1;
 
     if (days <= 0) {
@@ -41,13 +49,12 @@ const PerDiem = () => {
     }
 
     const mealVal = parseInt(data.Meals.replace(/[^a-z0-9]/gi, '')) * days;
-    const accVal =
-      parseInt(data.Accommodation.replace(/[^a-z0-9]/gi, '')) * nights;
+    const accVal = parseInt(data.Accommodation.replace(/[^a-z0-9]/gi, '')) * nights;
 
     const TOTALCLAIM = nights > 0 ? mealVal + accVal : mealVal;
 
     setClaim(TOTALCLAIM);
-    setFormData({ ...formData, TOTALCLAIM: TOTALCLAIM });
+    setFormData({ ...formData, TOTALCLAIM });
   }, [data.Meals, data.Accommodation, formData]);
 
   const handleChange = (e) => {
@@ -89,7 +96,7 @@ const PerDiem = () => {
       .then((response) => {
         setLoading(false);
         window.confirm(
-          'Your Request was successful. You Line Manager will receive the details'
+          'Your Request was successful. You Line Manager will receive the details',
         );
         navigate('/formselection');
       })
@@ -103,141 +110,141 @@ const PerDiem = () => {
   }, [calculateClaim]);
 
   return (
-    <div className='perdiemform'>
+    <div className="perdiemform">
       <Greeting user={data['First Name']} />
-      <form className='mainForm' onSubmit={handleSubmit}>
+      <form className="mainForm" onSubmit={handleSubmit}>
         <div>
-          <div className='inputdiv'>
+          <div className="inputdiv">
             <BasicDatePicker
               dateValue={dateValue}
               setDateValue={setDateValue}
             />
           </div>
-          <div className='inputdiv'>
+          <div className="inputdiv">
             <TextField
-              label='Destination'
-              name='destination'
+              label="Destination"
+              name="destination"
               required
               InputProps={{
                 readOnly: false,
               }}
-              variant='outlined'
+              variant="outlined"
               onChange={handleChange}
             />
           </div>
-          <div className='inputdiv'>
+          <div className="inputdiv">
             <TextField
-              label='Number of Days'
+              label="Number of Days"
               defaultValue={1}
               required
-              name='days'
-              type='number'
+              name="days"
+              type="number"
               InputProps={{
                 readOnly: false,
                 min: 1,
               }}
-              variant='outlined'
+              variant="outlined"
               onChange={handleChange}
             />
           </div>
-          <div className='inputdiv radioset'>
-            <FormLabel id='accommodation-group-label'>Accommodation</FormLabel>
+          <div className="inputdiv radioset">
+            <FormLabel id="accommodation-group-label">Accommodation</FormLabel>
             <RadioGroup
-              aria-labelledby='accommodation-group-label'
-              defaultValue='No'
+              aria-labelledby="accommodation-group-label"
+              defaultValue="No"
               row
               onChange={handleChange}
-              name='accommodation'
+              name="accommodation"
             >
-              <FormControlLabel value='Yes' control={<Radio />} label='Yes' />
-              <FormControlLabel value='No' control={<Radio />} label='No' />
+              <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+              <FormControlLabel value="No" control={<Radio />} label="No" />
             </RadioGroup>
           </div>
           {formData.accommodation === 'Yes' ? (
-            <div className='inputdiv'>
+            <div className="inputdiv">
               <TextField
-                label='Number of Nights'
+                label="Number of Nights"
                 required
-                name='nights'
-                type='number'
+                name="nights"
+                type="number"
                 InputProps={{
                   readOnly: false,
                   min: 0,
                 }}
-                variant='outlined'
+                variant="outlined"
                 onChange={handleChange}
               />
             </div>
           ) : null}
         </div>
-        <FormLabel id='purpose-group-label'>
+        <FormLabel id="purpose-group-label">
           What is the Purpose of your trip?
         </FormLabel>
         <RadioGroup
-          aria-labelledby='purpose-group-label'
-          defaultValue='No'
+          aria-labelledby="purpose-group-label"
+          defaultValue="No"
           required
           onChange={handleChange}
-          name='purpose'
+          name="purpose"
         >
           <FormControlLabel
-            value='Field Site Visit'
+            value="Field Site Visit"
             control={<Radio />}
-            label='Field/Site Visit'
+            label="Field/Site Visit"
           />
           <FormControlLabel
-            value='Meeting'
+            value="Meeting"
             control={<Radio />}
-            label='Meeting'
+            label="Meeting"
           />
           <FormControlLabel
-            value='Delivery'
+            value="Delivery"
             control={<Radio />}
-            label='Delivery'
+            label="Delivery"
           />
-          <FormControlLabel value='Other' control={<Radio />} label='Other' />
+          <FormControlLabel value="Other" control={<Radio />} label="Other" />
         </RadioGroup>
         {formData.purpose === 'Other' ? (
           <TextField
-            type='text'
-            size='small'
-            label='Please specify'
-            name='other_specify'
-            className='textInput'
+            type="text"
+            size="small"
+            label="Please specify"
+            name="other_specify"
+            className="textInput"
             onChange={handleChange}
           />
         ) : null}
 
-        <div className='inputdiv'>
+        <div className="inputdiv">
           <FormControl>
-            <InputLabel htmlFor='outlined-adornment-amount'>
+            <InputLabel htmlFor="outlined-adornment-amount">
               Total Claim
             </InputLabel>
             <OutlinedInput
               value={claim.toLocaleString()}
-              name='totalclaim'
+              name="totalclaim"
               onChange={handleChange}
-              startAdornment={
-                <InputAdornment position='start'>
+              startAdornment={(
+                <InputAdornment position="start">
                   {currencyLabel}
                 </InputAdornment>
-              }
-              label='Amount'
+              )}
+              label="Amount"
             />
           </FormControl>
         </div>
         <Button
-          color='primary'
-          variant='outlined'
-          type='submit'
-          size='large'
-          className='submitButton'
+          color="primary"
+          variant="outlined"
+          type="submit"
+          size="large"
+          className="submitButton"
         >
-          {loading ? <CircularProgress color='inherit' /> : 'submit'}
+          {loading ? <CircularProgress color="inherit" /> : 'submit'}
         </Button>
       </form>
     </div>
   );
-};
+}
 
 export default PerDiem;
