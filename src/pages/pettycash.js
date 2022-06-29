@@ -42,17 +42,17 @@ function PettyCash() {
   let navigate = useNavigate();
 
   const data = JSON.parse(localStorage.getItem('userdata'));
-  axios.interceptors.request.use(function (config) {
-    // spinning start to show
-    setLoading(true);
-    return config;
-  });
+  // axios.interceptors.request.use(function (config) {
+  //   // spinning start to show
+  //   setLoading(true);
+  //   return config;
+  // });
 
-  axios.interceptors.response.use(function (response) {
-    // spinning hide
-    setLoading(false);
-    return response;
-  });
+  // axios.interceptors.response.use(function (response) {
+  //   // spinning hide
+  //   setLoading(false);
+  //   return response;
+  // });
 
   const addOneToList = (e) => {
     e.preventDefault();
@@ -97,9 +97,9 @@ function PettyCash() {
     });
     setBudgetCode([...budgetCodes[itemsData.department]]);
   };
-  const SUBMIT_URI = 'https://esformsbackend.herokuapp.com/requests/pettycash';
+  // const SUBMIT_URI = 'https://esformsbackend.herokuapp.com/requests/pettycash';
   // const UPLOAD_URI= 'https://esformsbackend.herokuapp.com/requests/upload';
-  //  const SUBMIT_URI = 'http://localhost:3001/requests/pettycash';
+  const SUBMIT_URI = 'http://localhost:3001/requests/pettycash';
   // const UPLOAD_URI = 'http://localhost:3001/requests/upload';
   // const serverURL = 'http://localhost:3001';
   const config = {
@@ -109,6 +109,7 @@ function PettyCash() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData();
     formData.append('invoice', invoiceDoc);
     formData.append('details', JSON.stringify(submitData));
@@ -119,7 +120,10 @@ function PettyCash() {
       .post(SUBMIT_URI, formData, config)
       .then((response) => {
         console.log(formData.get('details'));
-        window.confirm('Your request has been submitted!');
+        window.confirm(
+          'Your Request was successful. You Line Manager will receive the details'
+        );
+        setLoading(false);
         navigate('/formselection');
       })
       .catch((err) => {
