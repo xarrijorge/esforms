@@ -14,14 +14,14 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<App />} />
-        <Route path='/formselection' element={<FormSelection />} />
-        <Route path='/perdiem' element={<PerDiem />} />
-        <Route path='/pettycash' element={<PettyCash />} />
+        <Route path="/" element={<App />} />
+        <Route path="/formselection" element={<FormSelection />} />
+        <Route path="/perdiem" element={<PerDiem />} />
+        <Route path="/pettycash" element={<PettyCash />} />
         {/* <Route path='/vehicle' element={<Vehicle />} /> */}
       </Routes>
     </BrowserRouter>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function
