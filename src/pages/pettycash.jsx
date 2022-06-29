@@ -36,6 +36,7 @@ function PettyCash() {
   const [itemsData, setitemsData] = React.useState({});
   const [itemsTotal, setItemsTotal] = React.useState(100);
   const [submitData, setSubmitData] = React.useState({});
+  // eslint-disable-next-line react/jsx-key
   const [list, setList] = React.useState([<Item count={0} />]);
   const [bankDetails, setBankDetails] = React.useState({});
   const [currency, setCurrency] = React.useState('USD');
@@ -64,6 +65,7 @@ function PettyCash() {
 
   const addOneToList = (e) => {
     e.preventDefault();
+    // eslint-disable-next-line react/jsx-key
     setList([...list, <Item />]);
   };
   // const removeLastItem = (e) => {
