@@ -88,3 +88,12 @@ form {
     margin-top: 15vh;
     margin-bottom: 20px;
 }
+.formFooter div{
+    margin: 25px 0;
+}
+.formFooter a{
+    text-decoration: none;
+}
+.formFooter a:hover{
+    text-decoration: underline;
+}
