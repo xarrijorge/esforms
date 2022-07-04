@@ -10,7 +10,7 @@ const budgetCodes = {
         '3719-Per diem',
         '3711-Servicing',
     ],
-    Agents: [
+    'Agent Management': [
         'select option',
         '3204-Agent Awards',
         '3205-Agent Commission',
@@ -18,13 +18,13 @@ const budgetCodes = {
         '3201-Agent Set Up Costs',
         '3202-Agent Support',
     ],
-    BD: ['select option', '4304-Fundraising Costs'],
-    CallCenter: [
+    'Business Development': ['select option', '4304-Fundraising Costs'],
+    'Call Center': [
         'select option',
         '3701-Call and Operational Costs',
         '3702-SMS Fees',
     ],
-    Corporate: [
+    'Corporate Finance': [
         'select option',
         '3905-BA Commission',
         '3907-Contractor',
@@ -72,7 +72,7 @@ const budgetCodes = {
         '3608-Market Research',
         '3600-Marketing',
     ],
-    'Operations Support': [
+    'Operations & Logistics': [
         'select option',
         '3409-Sales and Field Support',
         '3309-Shops',
@@ -163,7 +163,7 @@ const budgetCodes = {
         '4400-Talent Management',
         '7501-Employer NASSIT',
     ],
-    PD: [
+    'Product Development': [
         'select option',
         '4108-Commission on new product sales',
         '4103-Pilot',
