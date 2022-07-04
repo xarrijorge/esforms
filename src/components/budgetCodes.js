@@ -127,7 +127,7 @@ const budgetCodes = {
         '4604-Utilities and Bills',
         '5307-Other Expense',
     ],
-    'People &Culture': [
+    'People & Culture': [
         'select option',
         '4404-Administration',
         '3203-Agent Training',
