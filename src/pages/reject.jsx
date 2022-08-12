@@ -25,8 +25,8 @@ const Reject = () => {
         'Other',
     ];
 
-    // const API_URI = 'https://esformsbackend.herokuapp.com/requests/reject';
-    const API_URI = 'http://localhost:3001/reject/pettycash';
+    const API_URI = 'https://esformsbackend.herokuapp.com/requests/reject';
+    // const API_URI = 'http://localhost:3001/reject/pettycash';
     // const headers = {
     //     headers: {
     //         'Content-Type': 'application/json',

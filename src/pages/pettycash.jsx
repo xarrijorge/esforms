@@ -105,9 +105,10 @@ function PettyCash() {
         });
         setBudgetCode([...budgetCodes[itemsData.department]]);
     };
-    // const SUBMIT_URI = 'https://esformsbackend.herokuapp.com/requests/pettycash';
+    const SUBMIT_URI =
+        'https://esformsbackend.herokuapp.com/requests/pettycash';
     // const UPLOAD_URI= 'https://esformsbackend.herokuapp.com/requests/upload';
-    const SUBMIT_URI = 'http://localhost:3001/requests/pettycash';
+    // const SUBMIT_URI = 'http://localhost:3001/requests/pettycash';
     // const UPLOAD_URI = 'http://localhost:3001/requests/upload';
     // const serverURL = 'http://localhost:3001';
     const config = {

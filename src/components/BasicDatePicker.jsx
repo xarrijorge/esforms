@@ -10,6 +10,32 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 export default function BasicDatePicker({
     dateValue,
     setDateValue,
+    disablepast,
+    label = 'Date of leaving Station?',
+}) {
+    return (
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+                disablePast={!disablepast}
+                disableFuture={disablepast}
+                label={label}
+                value={dateValue}
+                inputFormat='MM/dd/yyyy'
+                // defaultValue='January 1, 2022'
+                name='date'
+                onChange={(newValue) => {
+                    setDateValue(newValue);
+                }}
+                // eslint-disable-next-line react/jsx-props-no-spreading
+                renderInput={(params) => <TextField {...params} />}
+            />
+        </LocalizationProvider>
+    );
+}
+
+export function ReverseDatePicker({
+    dateValue,
+    setDateValue,
     past = false,
     future = false,
     label = 'Date of leaving Station?',

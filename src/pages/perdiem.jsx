@@ -34,8 +34,13 @@ function PerDiem() {
     const data = JSON.parse(localStorage.getItem('userdata'));
     const [claim, setClaim] = React.useState(0);
     const [loading, setLoading] = React.useState(false);
+    const [reverse, setReverse] = React.useState();
 
     const currencyLabel = window.location.href.includes('lib') ? 'LRD' : 'LE';
+
+    const handleReverse = React.useCallback((e) => {
+        setReverse(e.target.value);
+    });
 
     const calculateClaim = React.useCallback(() => {
         let nights =
@@ -80,8 +85,8 @@ function PerDiem() {
     //     return response
     // })
 
-    // const API_URI = 'https://esformsbackend.herokuapp.com/requests/perdiem';
-    const API_URI = 'http://localhost:3002/requests/perdiem';
+    const API_URI = 'https://esformsbackend.herokuapp.com/requests/perdiem';
+    // const API_URI = 'http://localhost:3001/requests/perdiem';
     const headers = { 'content-type': 'application/json' };
 
     const navigate = useNavigate();
@@ -108,17 +113,44 @@ function PerDiem() {
 
     React.useEffect(() => {
         calculateClaim();
-    }, [calculateClaim]);
+    }, [calculateClaim, reverse, handleReverse]);
+    React.useLayoutEffect(() => {
+        handleReverse();
+    }, [reverse, handleReverse]);
 
     return (
         <div className='perdiemform'>
             <Greeting user={data['First Name']} />
             <form className='mainForm' onSubmit={handleSubmit}>
                 <div>
+                    <div className='typeChangeButton'>
+                        <FormLabel id='type-group-label'>
+                            Request Type
+                        </FormLabel>
+                        <RadioGroup
+                            aria-labelledby='type-group-label'
+                            row
+                            defaultValue={false}
+                            name='type'
+                            onChange={handleReverse}
+                        >
+                            <FormControlLabel
+                                value={false}
+                                control={<Radio />}
+                                label='Advance'
+                            />
+                            <FormControlLabel
+                                value={true}
+                                control={<Radio />}
+                                label='Reimbursement'
+                            />
+                        </RadioGroup>
+                    </div>
                     <div className='inputdiv'>
                         <BasicDatePicker
                             dateValue={dateValue}
                             setDateValue={setDateValue}
+                            disablepast={reverse}
                         />
                     </div>
                     <div className='inputdiv'>
