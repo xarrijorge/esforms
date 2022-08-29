@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY package*.json .
 
-RUN npm install --force
+RUN npm install --legacy-peer-deps
 
 #RUN touch ~/.bashrc && chmod +x ~/.bashrc
 #RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
