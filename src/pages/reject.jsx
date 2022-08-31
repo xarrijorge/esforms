@@ -25,8 +25,8 @@ const Reject = () => {
         'Other',
     ];
 
-    const API_URI = 'https://esformsbackend.herokuapp.com/requests/reject';
-    // const API_URI = 'http://localhost:3001/reject/pettycash';
+    const API_URI = 'https://esformsbackend.herokuapp.com/reject';
+    // const API_URI = 'http://localhost:3001/reject/';
     // const headers = {
     //     headers: {
     //         'Content-Type': 'application/json',
@@ -34,13 +34,16 @@ const Reject = () => {
     // };
     const ID = location.href.split('=')[1].split('&')[0];
     const FILE = location.href.split('=')[2];
+    const TYPE = location.href.includes('pettycash')
+        ? 'Petty Cash'
+        : 'Per Diem';
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
 
         await axios
-            .post(API_URI, { reason, other, ID, FILE })
+            .post(API_URI, { reason, other, ID, FILE, TYPE })
             .then((response) => {
                 setLoading(false);
                 console.log(response);
@@ -53,6 +56,8 @@ const Reject = () => {
                 console.log(err);
             });
     };
+
+    console.log(TYPE);
     return (
         <div className='reject'>
             <Greeting

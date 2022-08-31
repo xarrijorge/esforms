@@ -19,7 +19,8 @@ root.render(
                 <Route path='/formselection' element={<FormSelection />} />
                 <Route path='/perdiem' element={<PerDiem />} />
                 <Route path='/pettycash' element={<PettyCash />} />
-                <Route path='/reject/pettycash' element={<Reject />} />
+                <Route path='/reject/*' element={<Reject />} />
+                {/* <Route path='/reject/pettycash' element={<Reject />} /> */}
                 {/* <Route path='/vehicle' element={<Vehicle />} /> */}
             </Routes>
         </BrowserRouter>
