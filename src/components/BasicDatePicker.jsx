@@ -10,14 +10,11 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 export default function BasicDatePicker({
     dateValue,
     setDateValue,
-    disablepast,
     label = 'Date of leaving Station?',
 }) {
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
-                disablePast={!disablepast}
-                disableFuture={disablepast}
                 label={label}
                 value={dateValue}
                 inputFormat='MM/dd/yyyy'

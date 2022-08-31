@@ -114,9 +114,10 @@ function PerDiem() {
     React.useEffect(() => {
         calculateClaim();
     }, [calculateClaim, reverse, handleReverse]);
-    React.useLayoutEffect(() => {
-        handleReverse();
-    }, [reverse, handleReverse]);
+
+    // React.useLayoutEffect(() => {
+    //     handleReverse();
+    // }, [reverse, handleReverse]);
 
     return (
         <div className='perdiemform'>
@@ -132,7 +133,7 @@ function PerDiem() {
                             row
                             defaultValue={false}
                             name='type'
-                            onChange={handleReverse}
+                            // onChange={handleReverse}
                         >
                             <FormControlLabel
                                 value={false}
@@ -150,7 +151,7 @@ function PerDiem() {
                         <BasicDatePicker
                             dateValue={dateValue}
                             setDateValue={setDateValue}
-                            disablepast={reverse}
+                            // disablepast={reverse}
                         />
                     </div>
                     <div className='inputdiv'>

@@ -24,8 +24,8 @@ const Reject = () => {
         'Issue with supplier',
         'Other',
     ];
-
-    const API_URI = 'https://esformsbackend.herokuapp.com/reject';
+    const TYPE = location.href.includes('pettycash') ? 'pettycash' : 'perdiem';
+    const API_URI = `https://esformsbackend.herokuapp.com/reject/${TYPE}`;
     // const API_URI = 'http://localhost:3001/reject/';
     // const headers = {
     //     headers: {
@@ -34,9 +34,6 @@ const Reject = () => {
     // };
     const ID = location.href.split('=')[1].split('&')[0];
     const FILE = location.href.split('=')[2];
-    const TYPE = location.href.includes('pettycash')
-        ? 'Petty Cash'
-        : 'Per Diem';
 
     const handleSubmit = async (e) => {
         e.preventDefault();
