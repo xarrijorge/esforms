@@ -27,3 +27,8 @@
     background-color: #1565C0;
     color: #fff;
 }
+/* .typeChangeButton:checked{
+    flex-direction: column;
+    pointer-events: none;
+    border: 1px solid red;
+} */
