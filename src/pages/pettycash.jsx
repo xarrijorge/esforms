@@ -42,7 +42,7 @@ function PettyCash() {
     const [loading, setLoading] = React.useState(false);
     const [budgetCode, setBudgetCode] = React.useState(['select option']);
     const [department, setDepartment] = React.useState('Select Department');
-    const [invoiceDoc, setInvoice] = React.useState('');
+    const [invoiceDoc, setInvoice] = React.useState('#');
 
     const TOTAL = React.useMemo(() => [], []);
     const currencyLabel = window.location.href.includes('lib') ? 'LRD' : 'LE';
@@ -51,7 +51,7 @@ function PettyCash() {
 
     const data = JSON.parse(localStorage.getItem('userdata'));
     // axios.interceptors.request.use(function (config) {
-    //   // spinning start to show
+    //   // spinning start to show/
     //   setLoading(true);
     //   return config;
     // });
@@ -105,20 +105,49 @@ function PettyCash() {
         });
         setBudgetCode([...budgetCodes[itemsData.department]]);
     };
-    const SUBMIT_URI =
-        'https://esformsbackend.herokuapp.com/requests/pettycash';
+    // const SUBMIT_URI =
+    //     invoiceDoc === '#'
+    //         ? 'https://esformsbackend.herokuapp.com/requests/pettycash'
+    //         : 'https://esformsbackend.herokuapp.com/requests/pettycash';
     // const UPLOAD_URI= 'https://esformsbackend.herokuapp.com/requests/upload';
-    // const SUBMIT_URI = 'http://localhost:3001/requests/pettycash';
+    const SUBMIT_URI1 = 'http://localhost:3001/requests/pettycash';
+    const SUBMIT_URI2 = 'http://localhost:3001/requests/pettycash/2';
     // const UPLOAD_URI = 'http://localhost:3001/requests/upload';
     // const serverURL = 'http://localhost:3001';
-    const config = {
+    const config1 = {
         headers: {
             'content-type': 'application/x-www-form-urlencoded',
         },
     };
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
+
+    const config2 = {
+        headers: {
+            'content-type': 'application/json',
+        },
+    };
+    const submitWithoutAttachment = async () => {
+        await axios
+            .post(
+                SUBMIT_URI2,
+                { details: { ...submitData }, user: data },
+                config2
+            )
+            .then((response) => {
+                window.confirm(
+                    'Your Request was successful. You Line Manager will receive the details'
+                );
+                setLoading(false);
+                navigate('/formselection');
+                console.log(response);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+        console.log({ ...submitData, user: data });
+    };
+
+    const submitWithAttachment = async () => {
         const formData = new FormData();
         formData.append('invoice', invoiceDoc);
         formData.append('details', JSON.stringify(submitData));
@@ -126,7 +155,7 @@ function PettyCash() {
         checkTotal();
 
         await axios
-            .post(SUBMIT_URI, formData, config)
+            .post(SUBMIT_URI1, formData, config1)
             // eslint-disable-next-line no-unused-vars
             .then((response) => {
                 // eslint-disable-next-line no-alert
@@ -139,6 +168,14 @@ function PettyCash() {
             .catch((err) => {
                 console.log(err);
             });
+    };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        return invoiceDoc === '#'
+            ? submitWithoutAttachment()
+            : submitWithAttachment();
     };
 
     React.useEffect(() => {
